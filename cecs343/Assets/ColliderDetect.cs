@@ -17,6 +17,7 @@ public class ColliderDetect : MonoBehaviour {
         if (collision.gameObject.name == "Enemy 1")
         {
             Debug.Log("Collision with "+ collision.gameObject.name);
+            Destroy(collision.gameObject);
         }
     }
 }
