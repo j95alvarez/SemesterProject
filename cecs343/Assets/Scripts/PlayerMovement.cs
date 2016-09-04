@@ -61,4 +61,13 @@ public class PlayerMovement : MonoBehaviour {
             Instantiate(prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Enemy 1")
+        {
+            Debug.Log("Collision with " + collision.gameObject.name);
+            Destroy(collision.gameObject);
+        }
+    }
 }
