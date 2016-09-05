@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ColliderDetect.cs" />
+     <Compile Include="Assets\FadeAwayDamage.cs" />
      <Compile Include="Assets\MinionOne.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
