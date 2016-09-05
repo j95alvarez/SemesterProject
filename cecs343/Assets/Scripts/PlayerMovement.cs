@@ -27,12 +27,6 @@ public class PlayerMovement : MonoBehaviour {
             VerticalMove(jump * speed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            //Debug.Log("Down");
-            VerticalMove(-(speed * Time.deltaTime));
-        }
-
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             //Debug.Log("Left");
