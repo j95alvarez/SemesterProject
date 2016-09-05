@@ -45,10 +45,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\ColliderDetect.cs" />
-     <Compile Include="Assets\FadeAwayDamage.cs" />
-     <Compile Include="Assets\MinionOne.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
+     <Compile Include="Assets\Scripts\ColliderDetect.cs" />
+     <Compile Include="Assets\Scripts\FadeAwayDamage.cs" />
+     <Compile Include="Assets\Scripts\MinionOne.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour {
     public float jump;
     public GameObject target, prefab;
 
+    private int pHealth = 100;
+
     Object nasd;
 
 
@@ -21,31 +23,25 @@ public class PlayerMovement : MonoBehaviour {
         // Basic player movement and 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("UP");
+            //Debug.Log("UP");
             VerticalMove(jump * speed * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            Debug.Log("Down");
-            VerticalMove(-(speed * Time.deltaTime));
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            Debug.Log("Left");
+            //Debug.Log("Left");
             HorizontalMove(-(speed * Time.deltaTime));
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            Debug.Log("Right");
+            //Debug.Log("Right");
             HorizontalMove(speed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Attack");
+            //Debug.Log("Attack");
             Attack();
         }
     }
@@ -89,9 +85,11 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (collision.gameObject.name == "Enemy 1")
         {
-            Debug.Log("Collision with " + collision.gameObject.name);
-            Destroy(collision.gameObject);
+            if (pHealth > 0) {
+                pHealth -= 10;
+            }
         }
 
+        Debug.Log("phealth is: " + pHealth);
     }
 }
