@@ -6,6 +6,10 @@ public class PlayerMovement : MonoBehaviour {
     public float jump;
     public GameObject target, prefab;
 
+    Object nasd;
+
+
+    public float offest;
     // Use this for initialization
     void Start () {
 	
@@ -14,38 +18,47 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         
+        // Basic player movement and 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
         {
             Debug.Log("UP");
-            transform.Translate(0, (jump * speed * Time.deltaTime), 0);
+            VerticalMove(jump * speed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
             Debug.Log("Down");
-            transform.Translate(0, -(speed * Time.deltaTime), 0);
+            VerticalMove(-(speed * Time.deltaTime));
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             Debug.Log("Left");
-            transform.Translate(-(speed * Time.deltaTime), 0, 0);
+            HorizontalMove(-(speed * Time.deltaTime));
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
             Debug.Log("Right");
-            transform.Translate((speed * Time.deltaTime), 0, 0);
+            HorizontalMove(speed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.A))
         {
             Debug.Log("Attack");
-            attack();
+            Attack();
         }
     }
 
-    void attack ()
+    void HorizontalMove(float amount) {
+        transform.Translate(amount, 0, 0);
+    }
+
+    void VerticalMove(float amount) {
+        transform.Translate(0, amount, 0);
+    }
+
+    void Attack ()
     {
         // create a variable called distance to make sure the distance is close enough
         // to inflict damage from a melee attack target.transform.positon = the position
@@ -58,9 +71,19 @@ public class PlayerMovement : MonoBehaviour {
         if (distance < 1.5f)
         {
             Debug.Log("Hit");
-            Instantiate(prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+            nasd = Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
         }
+
+        StartCoroutine(Wait(3.0F));
     }
+
+    IEnumerator Wait(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        //print("WaitAndPrint " + Time.time);
+        Destroy(nasd);
+    }
+
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -69,5 +92,6 @@ public class PlayerMovement : MonoBehaviour {
             Debug.Log("Collision with " + collision.gameObject.name);
             Destroy(collision.gameObject);
         }
+
     }
 }
