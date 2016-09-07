@@ -44,6 +44,17 @@ public class PlayerMovement : MonoBehaviour {
             //Debug.Log("Attack");
             Attack();
         }
+        //Moving Direction
+        if (Input.GetAxis("Horizontal") > 0.1)
+        {
+            Debug.Log("Pos");
+            transform.localScale = new Vector2(1, 1);
+        }
+        else if (Input.GetAxis("Horizontal") < -0.1)
+        {
+            Debug.Log("Neg");
+            transform.localScale = new Vector2(-1, 1);
+        }
     }
 
     void HorizontalMove(float amount) {
