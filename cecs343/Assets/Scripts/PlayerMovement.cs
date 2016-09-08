@@ -73,6 +73,14 @@ public class PlayerMovement : MonoBehaviour {
         if (distance < 1.5f) {
             Debug.Log("Hit");
             nasd = Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
+
+            if (target.GetComponent<EnemyAI>().GetComponent<PlayerStatus>().health > 0)
+            {
+                target.GetComponent<EnemyAI>().GetComponent<PlayerStatus>().health -= 10;
+            }
+            else {
+                Destroy(target);
+            }
         }
 
         StartCoroutine(Wait(3.0F));
