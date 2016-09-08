@@ -30,7 +30,7 @@ public class ClimbingScript : MonoBehaviour {
         collide.GetComponent<PlayerMovement>().isClimbing = false;
         collide.GetComponent<BoxCollider2D>().isTrigger = false;
 		player.GetComponent<PlayerMovement>().climb = false;
-        StartCoroutine(Wait(.25f));
+        StartCoroutine(Wait(.001f));
     }
 
     IEnumerator Wait(float waitTime) {
