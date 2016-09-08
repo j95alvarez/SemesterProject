@@ -6,8 +6,11 @@ public class PlayerMovement : MonoBehaviour {
     public float jump;
     public GameObject target, prefab;
     public bool NeedRev = false;
+    public float CurrScaleX;
+    public float CurrScaleY;
 
     private int pHealth = 100;
+    
 
     Object nasd;
 
@@ -15,25 +18,25 @@ public class PlayerMovement : MonoBehaviour {
     public float offest;
     // Use this for initialization
     void Start () {
-	
-	}
+        CurrScaleX = transform.localScale.x;
+        CurrScaleY = transform.localScale.y;
+}
 	
 	// Update is called once per frame
 	void Update () {
-
         //Moving Direction Detacter
         //Use NeedRev to determin does the 
         //left right key need to reverse
         if (Input.GetAxis("Horizontal") > 0.1)
         {
-            //Debug.Log("Pos");
-            transform.localScale = new Vector2(1, 1);
+            Debug.Log(transform.localScale);
+            transform.localScale = new Vector2(CurrScaleX, CurrScaleY);
             NeedRev = false;
         }
         else if (Input.GetAxis("Horizontal") < -0.1)
         {
             //Debug.Log("Neg");
-            transform.localScale = new Vector2(-1, 1);
+            transform.localScale = new Vector2(-1* CurrScaleX, CurrScaleY);
             NeedRev = true;
         }
 
