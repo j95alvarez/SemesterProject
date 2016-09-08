@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour {
     public float jump;
     public GameObject target, prefab;
     public bool isClimbing;
+	public bool climb;
 
     private int pHealth = 100;
 
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour {
     // Use this for initialization
     void Start () {
         isClimbing = false;
+		climb = false;
 	}
 
 	// Update is called once per frame
@@ -27,12 +29,14 @@ public class PlayerMovement : MonoBehaviour {
             VerticalMove(jump * speed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow) && !isClimbing) {
+		if (Input.GetKey(KeyCode.LeftArrow) && !isClimbing && climb == false) 
+		{
             //Debug.Log("Left");
             HorizontalMove(-(speed * Time.deltaTime));
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) && !isClimbing) {
+	if (Input.GetKey(KeyCode.RightArrow) && !isClimbing && climb == false) 
+	{
             //Debug.Log("Right");
             HorizontalMove(speed * Time.deltaTime);
         }
