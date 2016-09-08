@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ClimbingScript.cs" />
+     <Compile Include="Assets\EnemyStatus.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\ColliderDetect.cs" />
      <Compile Include="Assets\Scripts\EnemyAI.cs" />
