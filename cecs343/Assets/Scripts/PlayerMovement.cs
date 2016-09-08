@@ -3,9 +3,10 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
     public float speed;
-    public float jump;
+    public float jump = 90; //set jump to constant calue making a constant jump height
+    public flot jumpHeight = 9;
     public GameObject target, prefab;
-    public bool isClimbing;
+    public bool isClimbing, isJumping;
 
     private int pHealth = 100;
 
@@ -16,14 +17,16 @@ public class PlayerMovement : MonoBehaviour {
     // Use this for initialization
     void Start () {
         isClimbing = false;
+	isJumping = false;
 	}
 
 	// Update is called once per frame
 	void Update () {
         
         // Basic player movement and 
-        if (Input.GetKey(KeyCode.Space) && !isClimbing) {
+        if (Input.GetKeyDown(KeyCode.Space) && !isClimbing && isJumping) {
             //Debug.Log("UP");
+	    isJumping = true;
             VerticalMove(jump * speed * Time.deltaTime);
         }
 
