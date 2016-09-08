@@ -7,17 +7,22 @@ public class PlayerMovement : MonoBehaviour
     public float jump;
     public GameObject target, prefab;
     public bool NeedRev = false;
+    public bool isClimbing, climb;
+    public float GetScaleX;
+    public float GetScaleY;
 
     private int pHealth = 100;
 
     Object nasd;
 
-
+    
     public float offest;
     // Use this for initialization
-    void Start()
-    {
-
+    void Start() {
+        GetScaleX = transform.localScale.x;
+        GetScaleY = transform.localScale.y;
+        isClimbing = false;
+        climb = false;
     }
 
     // Update is called once per frame
@@ -30,18 +35,18 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxis("Horizontal") > 0.1)
         {
             //Debug.Log("Pos");
-            transform.localScale = new Vector2(1, 1);
+            transform.localScale = new Vector2(GetScaleX, GetScaleY);
             NeedRev = false;
         }
         else if (Input.GetAxis("Horizontal") < -0.1)
         {
             //Debug.Log("Neg");
-            transform.localScale = new Vector2(-1, 1);
+            transform.localScale = new Vector2(-GetScaleX, GetScaleY);
             NeedRev = true;
         }
 
         // Basic player movement and 
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !isClimbing)
         {
             //Debug.Log("UP");
             VerticalMove(jump * speed * Time.deltaTime);
@@ -76,12 +81,24 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && !isClimbing)
         {
             //Debug.Log("Attack");
             Attack();
         }
 
+        if (climb)
+        {
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                VerticalMove(speed * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                VerticalMove(-(speed * Time.deltaTime));
+            }
+        }
     }
 
     void HorizontalMove(float amount)
@@ -108,6 +125,15 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Hit");
             nasd = Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
+
+            if (target.GetComponent<EnemyAI>().GetComponent<PlayerStatus>().health > 0)
+            {
+                target.GetComponent<EnemyAI>().GetComponent<PlayerStatus>().health -= 10;
+            }
+            else
+            {
+                Destroy(target);
+            }
         }
 
         StartCoroutine(Wait(3.0F));
@@ -129,8 +155,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 pHealth -= 10;
             }
+            Debug.Log("phealth is: " + pHealth);
         }
-
-        Debug.Log("phealth is: " + pHealth);
     }
 }
