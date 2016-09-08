@@ -29,14 +29,12 @@ public class PlayerMovement : MonoBehaviour {
             VerticalMove(jump * speed * Time.deltaTime);
         }
 
-		if (Input.GetKey(KeyCode.LeftArrow) && !isClimbing && climb == false) 
-		{
+		if (Input.GetKey(KeyCode.LeftArrow)) {
             //Debug.Log("Left");
             HorizontalMove(-(speed * Time.deltaTime));
         }
 
-	if (Input.GetKey(KeyCode.RightArrow) && !isClimbing && climb == false) 
-	{
+	    if (Input.GetKey(KeyCode.RightArrow)) {
             //Debug.Log("Right");
             HorizontalMove(speed * Time.deltaTime);
         }
@@ -46,7 +44,7 @@ public class PlayerMovement : MonoBehaviour {
             Attack();
         }
 
-        if (isClimbing) {
+        if (climb) {
             if (Input.GetKey(KeyCode.UpArrow)) {
                 VerticalMove(speed * Time.deltaTime);
             }
@@ -78,11 +76,9 @@ public class PlayerMovement : MonoBehaviour {
             Debug.Log("Hit");
             nasd = Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
 
-            if (target.GetComponent<EnemyAI>().GetComponent<PlayerStatus>().health > 0)
-            {
+            if (target.GetComponent<EnemyAI>().GetComponent<PlayerStatus>().health > 0) {
                 target.GetComponent<EnemyAI>().GetComponent<PlayerStatus>().health -= 10;
-            }
-            else {
+            } else {
                 Destroy(target);
             }
         }
@@ -99,13 +95,10 @@ public class PlayerMovement : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.name == "Enemy 1") {
-            if (pHealth > 0)
-            {
+            if (pHealth > 0) {
                 pHealth -= 10;
             }
             Debug.Log("phealth is: " + pHealth);
         }
-    }
-
-   
+    } 
 }
