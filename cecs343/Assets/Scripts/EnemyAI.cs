@@ -11,7 +11,8 @@ public class EnemyAI : MonoBehaviour {
 	
 	}
 
-    void Update() {
+    void Update() 
+	{
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
     }
 
