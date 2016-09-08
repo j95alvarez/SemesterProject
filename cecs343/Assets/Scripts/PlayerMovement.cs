@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour {
     public float speed;
     public float jump;
     public GameObject target, prefab;
+    public bool NeedRev = false;
 
     private int pHealth = 100;
 
@@ -19,7 +20,23 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+
+        //Moving Direction Detacter
+        //Use NeedRev to determin does the 
+        //left right key need to reverse
+        if (Input.GetAxis("Horizontal") > 0.1)
+        {
+            //Debug.Log("Pos");
+            transform.localScale = new Vector2(1, 1);
+            NeedRev = false;
+        }
+        else if (Input.GetAxis("Horizontal") < -0.1)
+        {
+            //Debug.Log("Neg");
+            transform.localScale = new Vector2(-1, 1);
+            NeedRev = true;
+        }
+
         // Basic player movement and 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
         {
@@ -29,14 +46,30 @@ public class PlayerMovement : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            //Debug.Log("Left");
-            HorizontalMove(-(speed * Time.deltaTime));
+            if (NeedRev)//while player change face direction
+            {
+                Debug.Log("reverse1");
+                HorizontalMove((speed * Time.deltaTime));
+            }
+            else
+            {
+                //Debug.Log("Left");
+                HorizontalMove(-(speed * Time.deltaTime));
+            }
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            //Debug.Log("Right");
-            HorizontalMove(speed * Time.deltaTime);
+            if (NeedRev)
+            {
+                Debug.Log("reverse2");
+                HorizontalMove(-(speed * Time.deltaTime));
+            }else
+            {
+                //Debug.Log("Right");
+                HorizontalMove(speed * Time.deltaTime);
+            }
+            
         }
 
         if (Input.GetKey(KeyCode.A))
@@ -44,17 +77,7 @@ public class PlayerMovement : MonoBehaviour {
             //Debug.Log("Attack");
             Attack();
         }
-        //Moving Direction
-        if (Input.GetAxis("Horizontal") > 0.1)
-        {
-            Debug.Log("Pos");
-            transform.localScale = new Vector2(1, 1);
-        }
-        else if (Input.GetAxis("Horizontal") < -0.1)
-        {
-            Debug.Log("Neg");
-            transform.localScale = new Vector2(-1, 1);
-        }
+        
     }
 
     void HorizontalMove(float amount) {
