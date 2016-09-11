@@ -3,22 +3,16 @@ using System.Collections;
 
 public class ClimbingScript : MonoBehaviour {
 	GameObject player;
-	void Start()
-	{
+	void Start() {
 		player = GameObject.Find("Player");
 	}
-	void Update()
-	{
+	void Update() {
 		//Debug.Log ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-		if (player.GetComponent<PlayerMovement> ().isClimbing == true) 
-		{
-			if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) 
-			{
+		if (player.GetComponent<PlayerMovement> ().isClimbing) {
+			if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) {
 				player.GetComponent<PlayerMovement>().climb = true;
 			}
-			if (player.GetComponent<PlayerMovement>().climb == true) 
-			{
-				//Debug.Log("Penis");
+			if (player.GetComponent<PlayerMovement>().climb == true) {
 				player.GetComponent<Rigidbody2D>().gravityScale = 0f;
 				player.GetComponent<BoxCollider2D>().isTrigger = true;
 			}
@@ -36,11 +30,10 @@ public class ClimbingScript : MonoBehaviour {
         collide.GetComponent<PlayerMovement>().isClimbing = false;
         collide.GetComponent<BoxCollider2D>().isTrigger = false;
 		player.GetComponent<PlayerMovement>().climb = false;
-        StartCoroutine(Wait(.25f));
+        StartCoroutine(Wait(.001f));
     }
 
-    IEnumerator Wait(float waitTime)
-    {
+    IEnumerator Wait(float waitTime) {
         yield return new WaitForSeconds(waitTime);
         //print("WaitAndPrint " + Time.time);
         player.GetComponent<Rigidbody2D>().gravityScale = 1f;
