@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow)) {
             //while player change face direction
             if (NeedRev) {
-                Debug.Log("reverse1");
+                //Debug.Log("reverse1");
                 HorizontalMove((speed * Time.deltaTime));
             } else {
                 //Debug.Log("Left");
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.RightArrow)) {
             if (NeedRev) {
-                Debug.Log("reverse2");
+                //Debug.Log("reverse2");
                 HorizontalMove(-(speed * Time.deltaTime));
             } else {
                 //Debug.Log("Right");
@@ -102,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
             Instantiate(prefab, new Vector3(transform.position.x - offest, transform.position.y, transform.position.z), Quaternion.identity);
         else
             Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
+        Debug.Log(NeedRev);
         //nasd = Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
     }
 

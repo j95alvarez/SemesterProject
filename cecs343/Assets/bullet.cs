@@ -4,20 +4,28 @@ using System.Collections;
 public class bullet : MonoBehaviour {
     public float speed;
     GameObject enemy;
-    public float GetX;
+    public bool Sign;
 
 	// Use this for initialization
 	void Start () {
-        if (Input.GetAxis("Horizontal") > 0)
-            GetX = 1;
-        else if (Input.GetAxis("Horizontal") < 0)
-            GetX = -1;
+        GameObject target;
+        target = GameObject.Find("Player");
+        Sign = target.GetComponent<PlayerMovement>().NeedRev;
+        //Debug.Log(Sign);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(GetX * speed * Time.deltaTime, 0, 0);
-        StartCoroutine(Wait(2.0F));
+        if (Sign)
+        {
+            transform.Translate(-speed * Time.deltaTime, 0, 0);
+            StartCoroutine(Wait(2.0F));
+        }
+        else
+        {
+            transform.Translate(speed * Time.deltaTime, 0, 0);
+            StartCoroutine(Wait(2.0F));
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
