@@ -10,12 +10,13 @@ public class PlayerMovement : MonoBehaviour
     public bool isClimbing, climb;
     public float GetScaleX;
     public float GetScaleY;
+    public float facing;
+    public float bulletspeed;
 
     private int pHealth = 100;
 
     Object nasd;
 
-    
     public float offest;
     // Use this for initialization
     void Start() {
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         GetScaleY = transform.localScale.y;
         isClimbing = false;
         climb = false;
+        facing = 1;
     }
 
     // Update is called once per frame
@@ -50,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow)) {
             //while player change face direction
+            facing = -1;
             if (NeedRev) {
                 Debug.Log("reverse1");
                 HorizontalMove((speed * Time.deltaTime));
@@ -60,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.RightArrow)) {
+            facing = 1;
             if (NeedRev) {
                 Debug.Log("reverse2");
                 HorizontalMove(-(speed * Time.deltaTime));
@@ -98,7 +102,8 @@ public class PlayerMovement : MonoBehaviour
     void Attack() {
         StartCoroutine(Wait(3.0F));
 
-        nasd = Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
+        var nasd = (GameObject)Instantiate(prefab, new Vector3(transform.position.x + (offest*facing), transform.position.y, transform.position.z), Quaternion.identity);
+        nasd.GetComponent<bullet>().speed = bulletspeed * facing;
     }
 
     IEnumerator Wait(float waitTime) {
