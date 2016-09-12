@@ -48,9 +48,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow)) {
             //while player change face direction
-            facing = -1;
+            //facing = -1;
             if (needRev) {
-                Debug.Log("reverse1");
+                //Debug.Log("reverse1");
                 HorizontalMove((speed * Time.deltaTime));
             } else {
                 //Debug.Log("Left");
@@ -59,9 +59,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.RightArrow)) {
-            facing = 1;
+            //facing = 1;
             if (needRev) {
-                Debug.Log("reverse2");
+                //Debug.Log("reverse2");
                 HorizontalMove(-(speed * Time.deltaTime));
             } else {
                 //Debug.Log("Right");
@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.A) && !isClimbing) {
+        if (Input.GetKeyDown(KeyCode.Z) && !isClimbing) {
             //Debug.Log("Attack");
             Attack();
         }
@@ -97,9 +97,12 @@ public class PlayerMovement : MonoBehaviour
     
     void Attack() {
         StartCoroutine(Wait(3.0F));
-
-        var nasd = (GameObject)Instantiate(prefab, new Vector3(transform.position.x + (offest*facing), transform.position.y, transform.position.z), Quaternion.identity);
-        nasd.GetComponent<bullet>().speed = bulletspeed * facing;
+        if (needRev)
+            Instantiate(prefab, new Vector3(transform.position.x - offest, transform.position.y, transform.position.z), Quaternion.identity);
+        else
+            Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
+        //var nasd = (GameObject)Instantiate(prefab, new Vector3(transform.position.x + (offest*facing), transform.position.y, transform.position.z), Quaternion.identity);
+        //nasd.GetComponent<bullet>().speed = bulletspeed * facing;
     }
 
     IEnumerator Wait(float waitTime) {
