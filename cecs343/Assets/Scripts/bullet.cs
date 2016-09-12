@@ -3,11 +3,14 @@ using System.Collections;
 
 public class bullet : MonoBehaviour {
     public float speed;
-    GameObject enemy;
+    //GameObject enemy;
     public bool Sign;
 
-	// Use this for initialization
-	void Start () {
+    GameObject HP;
+    private int health;
+
+    // Use this for initialization
+    void Start () {
         GameObject target;
         target = GameObject.Find("Player");
         Sign = target.GetComponent<PlayerMovement>().needRev;
@@ -27,8 +30,15 @@ public class bullet : MonoBehaviour {
             StartCoroutine(Wait(2.0F));
         }
     }
-
-    void OnCollisionEnter2D(Collision2D collision) {
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.name == "Enemy 1")
+        {
+            col.gameObject.GetComponent<EnemyAI>().eHealth -= 10;
+        }
+        Destroy(this.gameObject);
+    }
+    /*void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.name == "Enemy 1") {
             if (collision.gameObject.GetComponent<PlayerStatus>().health > 0) {
                 collision.gameObject.GetComponent<PlayerStatus>().health -= 10;
@@ -37,7 +47,7 @@ public class bullet : MonoBehaviour {
         }
 
         Destroy(this.gameObject);
-    }
+    }*/
 
     IEnumerator Wait(float waitTime) {
         yield return new WaitForSeconds(waitTime);

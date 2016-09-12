@@ -38,8 +38,10 @@ public class Spawn : MonoBehaviour {
                 NegPosXRandom = Random.Range(-1, 2);
             } while (NegPosXRandom == 0);
             Vector3 Range = new Vector3(transform.position.x + (RandomPoint* NegPosXRandom), transform.position.y, transform.position.z);
-            Debug.Log("Point X = " + RandomPoint * NegPosXRandom + " Spawn !");
-            Instantiate(GameObject.Find("Enemy 1"), Range, transform.rotation);
+            //Debug.Log("Point X = " + RandomPoint * NegPosXRandom + " Spawn !");
+             GameObject newName = (GameObject)Instantiate(GameObject.Find("Enemy 1"), Range, transform.rotation);
+            newName.name = GameObject.Find("Enemy 1").name;
+            //GameObject.Find("Enemy 1").transform.name = "Enimy_1";
         }
     }
 }

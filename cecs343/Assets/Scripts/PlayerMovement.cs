@@ -9,10 +9,9 @@ public class PlayerMovement : MonoBehaviour
     public bool needRev;
     public bool isClimbing, climb;
     public float getScaleX, getScaleY, facing, bulletspeed;
+    public int pHealth;
 
-    private int pHealth = 100;
-
-    Object nasd;
+    //Object nasd;
 
     public float offest;
     // Use this for initialization
@@ -20,12 +19,15 @@ public class PlayerMovement : MonoBehaviour
         getScaleX = transform.localScale.x;
         getScaleY = transform.localScale.y;
         isClimbing = climb = needRev = false;
-        facing = 1;
+        //facing = 1;
+        
     }
 
     // Update is called once per frame
     void Update() {
 
+        if (pHealth == 0)
+            dead();
         //Moving Direction Detacter
         //Use NeedRev to determin does the 
         //left right key need to reverse
@@ -110,14 +112,22 @@ public class PlayerMovement : MonoBehaviour
         //print("WaitAndPrint " + Time.time);
         //Destroy(nasd);
     }
+    void dead()
+    {
+        Destroy(gameObject);//blah blah blah
+    }
 
-
-    void OnCollisionEnter2D(Collision2D collision) {
+    /*void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.name == "Enemy 1") {
             if (pHealth > 0) {
                 pHealth -= 10;
+                Debug.Log("phealth is: " + pHealth);
             }
-            Debug.Log("phealth is: " + pHealth);
+           else
+            {
+                Destroy(gameObject);
+                Debug.Log("DEAD");
+            }
         }
-    }
+    }*/
 }
