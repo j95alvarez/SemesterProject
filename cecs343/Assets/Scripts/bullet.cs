@@ -4,16 +4,28 @@ using System.Collections;
 public class bullet : MonoBehaviour {
     public float speed;
     GameObject enemy;
+    public bool Sign;
 
 	// Use this for initialization
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        transform.Translate(speed * Time.deltaTime, 0, 0);
-        StartCoroutine(Wait(2.0F));
+        GameObject target;
+        target = GameObject.Find("Player");
+        Sign = target.GetComponent<PlayerMovement>().needRev;
+        //Debug.Log(Sign);
+    }
+
+    // Update is called once per frame
+    void Update () {
+        if (Sign)
+        {
+            transform.Translate(-speed * Time.deltaTime, 0, 0);
+            StartCoroutine(Wait(2.0F));
+        }
+        else
+        {
+            transform.Translate(speed * Time.deltaTime, 0, 0);
+            StartCoroutine(Wait(2.0F));
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
