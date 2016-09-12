@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         GetScaleY = transform.localScale.y;
         isClimbing = false;
         climb = false;
+
     }
 
     // Update is called once per frame
@@ -70,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.A) && !isClimbing) {
+        if (Input.GetKeyDown(KeyCode.Z) && !isClimbing) {
             //Debug.Log("Attack");
             Attack();
         }
@@ -97,8 +98,11 @@ public class PlayerMovement : MonoBehaviour
     
     void Attack() {
         StartCoroutine(Wait(3.0F));
-
-        nasd = Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
+        if (NeedRev)
+            Instantiate(prefab, new Vector3(transform.position.x - offest, transform.position.y, transform.position.z), Quaternion.identity);
+        else
+            Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
+        //nasd = Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
     }
 
     IEnumerator Wait(float waitTime) {

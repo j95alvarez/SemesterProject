@@ -4,15 +4,19 @@ using System.Collections;
 public class bullet : MonoBehaviour {
     public float speed;
     GameObject enemy;
+    public float GetX;
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        if (Input.GetAxis("Horizontal") > 0)
+            GetX = 1;
+        else if (Input.GetAxis("Horizontal") < 0)
+            GetX = -1;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(speed * Time.deltaTime, 0, 0);
+        transform.Translate(GetX * speed * Time.deltaTime, 0, 0);
         StartCoroutine(Wait(2.0F));
     }
 
