@@ -6,12 +6,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float jump;
     public GameObject target, prefab;
-    public bool NeedRev = false;
+    public bool needRev;
     public bool isClimbing, climb;
-    public float GetScaleX;
-    public float GetScaleY;
-    public float facing;
-    public float bulletspeed;
+    public float getScaleX, getScaleY, facing, bulletspeed;
 
     private int pHealth = 100;
 
@@ -20,10 +17,9 @@ public class PlayerMovement : MonoBehaviour
     public float offest;
     // Use this for initialization
     void Start() {
-        GetScaleX = transform.localScale.x;
-        GetScaleY = transform.localScale.y;
-        isClimbing = false;
-        climb = false;
+        getScaleX = transform.localScale.x;
+        getScaleY = transform.localScale.y;
+        isClimbing = climb = needRev = false;
         facing = 1;
     }
 
@@ -35,13 +31,13 @@ public class PlayerMovement : MonoBehaviour
         //left right key need to reverse
         if (Input.GetAxis("Horizontal") > 0.1) {
             //Debug.Log("Pos");
-            transform.localScale = new Vector2(GetScaleX, GetScaleY);
-            NeedRev = false;
+            transform.localScale = new Vector2(getScaleX, getScaleY);
+            needRev = false;
         }
         else if (Input.GetAxis("Horizontal") < -0.1) {
             //Debug.Log("Neg");
-            transform.localScale = new Vector2(-GetScaleX, GetScaleY);
-            NeedRev = true;
+            transform.localScale = new Vector2(-getScaleX, getScaleY);
+            needRev = true;
         }
 
         // Basic player movement and 
@@ -53,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow)) {
             //while player change face direction
             facing = -1;
-            if (NeedRev) {
+            if (needRev) {
                 Debug.Log("reverse1");
                 HorizontalMove((speed * Time.deltaTime));
             } else {
@@ -64,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.RightArrow)) {
             facing = 1;
-            if (NeedRev) {
+            if (needRev) {
                 Debug.Log("reverse2");
                 HorizontalMove(-(speed * Time.deltaTime));
             } else {
