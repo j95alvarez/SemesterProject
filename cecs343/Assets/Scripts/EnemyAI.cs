@@ -15,7 +15,7 @@ public class EnemyAI : MonoBehaviour {
     void Update() 
 	{
         transform.position = Vector3.MoveTowards(transform.position, GameObject.Find("Player").transform.position, speed * Time.deltaTime);
-        Debug.Log(GameObject.Find("Player").transform.position);
+        //Debug.Log(GameObject.Find("Player").transform.position);
         if(eHealth <= 0)
         {
             Destroy(gameObject);

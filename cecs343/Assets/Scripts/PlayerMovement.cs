@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, this.gameObject.GetComponent<Rigidbody2D>().velocity.y);
+        //this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, this.gameObject.GetComponent<Rigidbody2D>().velocity.y);
         //Debug.Log(transform.localPosition);
         if (pHealth == 0)
             dead();
