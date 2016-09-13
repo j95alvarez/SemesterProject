@@ -17,6 +17,7 @@ public class ClimbingScript : MonoBehaviour {
 			}
 		}
 	}
+
     void OnTriggerEnter2D(Collider2D collide) {
         if (collide.gameObject.name == "Player") 
 		{
@@ -26,10 +27,12 @@ public class ClimbingScript : MonoBehaviour {
     }
 
     void OnTriggerExit2D(Collider2D collide) {
-        collide.GetComponent<PlayerMovement>().isClimbing = false;
-        collide.GetComponent<BoxCollider2D>().isTrigger = false;
-		player.GetComponent<PlayerMovement>().climb = false;
-        StartCoroutine(Wait(.001f));
+        if (collide.gameObject.name == "Player") {
+            collide.GetComponent<PlayerMovement>().isClimbing = false;
+            collide.GetComponent<BoxCollider2D>().isTrigger = false;
+            player.GetComponent<PlayerMovement>().climb = false;
+            StartCoroutine(Wait(.001f));
+        }
     }
 
     IEnumerator Wait(float waitTime) {
