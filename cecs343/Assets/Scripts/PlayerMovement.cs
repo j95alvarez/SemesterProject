@@ -3,13 +3,16 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed, jump;
+    public float speed;
+    public float jump;
     public GameObject target, prefab;
-    public bool needRev,isClimbing, climb, inAir, KnockRight, canShoot;
+    public bool needRev,isClimbing, climb, inAir;
     public float getScaleX, getScaleY, facing, bulletspeed;
     public int pHealth;
     //KNOCKS
-    public float KnockForce, KnockTime;
+    public float KnockForce;
+    public float KnockTime;
+    public bool KnockRight;
     private float KnockCounter = 0;
     
     public float offest;
@@ -20,11 +23,10 @@ public class PlayerMovement : MonoBehaviour
     void Start() {
         getScaleX = transform.localScale.x;
         getScaleY = transform.localScale.y;
-        isClimbing = climb = needRev = canShoot = false;
+        isClimbing = climb = needRev = false;
         //facing = 1;
         rb2D = gameObject.GetComponent<Rigidbody2D>();
         inAir = false;
-        canShoot = true;
     }
 
 
@@ -82,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) && !isClimbing && canShoot) {
+        if (Input.GetKeyDown(KeyCode.Z) && !isClimbing) {
             //Debug.Log("Attack");
             Attack();
         }
@@ -122,19 +124,12 @@ public class PlayerMovement : MonoBehaviour
     
     void Attack() {
         StartCoroutine(Wait(3.0F));
-        this.gameObject.GetComponent<ShotCount>().shotCount += 1;
-
         if (needRev)
-        {
             Instantiate(prefab, new Vector3(transform.position.x - offest, transform.position.y, transform.position.z), Quaternion.identity);
-            
-        }
         else
-        {
             Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
-        }
-
-        prefab.GetComponent<bullet>().speed = bulletspeed;
+        //var nasd = (GameObject)Instantiate(prefab, new Vector3(transform.position.x + (offest*facing), transform.position.y, transform.position.z), Quaternion.identity);
+        //nasd.GetComponent<bullet>().speed = bulletspeed * facing;
     }
 
     IEnumerator Wait(float waitTime) {
@@ -142,7 +137,6 @@ public class PlayerMovement : MonoBehaviour
         //print("WaitAndPrint " + Time.time);
         //Destroy(nasd);
     }
-
     void dead()
     {
         Destroy(gameObject);//blah blah blah
