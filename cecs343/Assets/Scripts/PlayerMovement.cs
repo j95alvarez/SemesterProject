@@ -8,14 +8,15 @@ public class PlayerMovement : MonoBehaviour
     public GameObject target, prefab;
     public bool needRev;
     public bool isClimbing, climb;
-    public float getScaleX, getScaleY, facing, bulletspeed;
+    public float getScaleX, getScaleY, facing, bulletspeed, radius;
     public int pHealth;
     //KNOCKS
     public float KnockForce;
     public float KnockTime;
     public bool KnockRight;
     private float KnockCounter = 0;
-    //Object nasd;
+    public Transform groundPoint;
+    public LayerMask groundMask;
 
     public float offest;
 
@@ -32,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, this.gameObject.GetComponent<Rigidbody2D>().velocity.y);
         //Debug.Log(transform.localPosition);
         if (pHealth == 0)
             dead();
@@ -52,7 +54,27 @@ public class PlayerMovement : MonoBehaviour
         // Basic player movement and 
         if (Input.GetKey(KeyCode.Space) && !isClimbing) {
             //Debug.Log("UP");
-            VerticalMove(jump * speed * Time.deltaTime);
+            //Vector2 moveDirection = 
+            
+
+            // True or false if the overlap circle is on the layer mask
+
+            // This stuff here transform the sprite depending on the number
+            // If the value is 1, the sprite/character will face right
+            // If the value is -1, the character will face left
+            if (Input.GetAxisRaw("Horizontal") == 1)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if ((Input.GetAxisRaw("Horizontal") == -1))
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && (Physics2D.OverlapCircle(groundPoint.position, radius, groundMask)))
+            {
+                this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jump));
+            }
         }
 
         if (Input.GetKey(KeyCode.LeftArrow)) {
