@@ -9,8 +9,6 @@ public class CameraFollow : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-        Camera.main.orthographicSize = 3;
-	
 	}
 	
 	// Update is called once per frame
