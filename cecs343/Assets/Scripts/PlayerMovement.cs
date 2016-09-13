@@ -6,8 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float jump;
     public GameObject target, prefab;
-    public bool needRev;
-    public bool isClimbing, climb;
+    public bool needRev,isClimbing, climb, inAir;
     public float getScaleX, getScaleY, facing, bulletspeed;
     public int pHealth;
     //KNOCKS
@@ -15,8 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float KnockTime;
     public bool KnockRight;
     private float KnockCounter = 0;
-    //Object nasd;
-
+    
     public float offest;
 
     private Rigidbody2D rb2D;
@@ -28,10 +26,13 @@ public class PlayerMovement : MonoBehaviour
         isClimbing = climb = needRev = false;
         //facing = 1;
         rb2D = gameObject.GetComponent<Rigidbody2D>();
+        inAir = false;
     }
+
 
     // Update is called once per frame
     void Update() {
+        this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, this.gameObject.GetComponent<Rigidbody2D>().velocity.y);
         //Debug.Log(transform.localPosition);
         if (pHealth == 0)
             dead();
@@ -50,9 +51,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Basic player movement and 
-        if (Input.GetKey(KeyCode.Space) && !isClimbing) {
+        if (Input.GetKeyDown(KeyCode.Space) && !isClimbing) {
             //Debug.Log("UP");
-            VerticalMove(jump * speed * Time.deltaTime);
+            if (!inAir) {
+                inAir = true;
+                this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jump));
+            }
+            
         }
 
         if (Input.GetKey(KeyCode.LeftArrow)) {
@@ -146,6 +151,10 @@ public class PlayerMovement : MonoBehaviour
             else if (collision.transform.position.x < transform.position.x)
                 KnockRight = false;
             Knocked();
+        }
+
+        if (collision.gameObject.name == "ground") {
+            inAir = false;
         }
         
     }
