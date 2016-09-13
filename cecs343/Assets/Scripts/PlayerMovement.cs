@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-
         if (pHealth == 0)
             dead();
         //Moving Direction Detacter
@@ -96,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Knocked()
     {
+        KnockCounter = 0;
         while (KnockTime > KnockCounter)
         {
             KnockCounter += Time.deltaTime;
@@ -136,17 +136,16 @@ public class PlayerMovement : MonoBehaviour
         Destroy(gameObject);//blah blah blah
     }
 
-    /*void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.name == "Enemy 1") {
-            if (pHealth > 0) {
-                pHealth -= 10;
-                Debug.Log("phealth is: " + pHealth);
-            }
-           else
-            {
-                Destroy(gameObject);
-                Debug.Log("DEAD");
-            }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Enemy 1")
+        {
+            if (collision.transform.position.x > transform.position.x)
+                KnockRight = true;
+            else if (collision.transform.position.x < transform.position.x)
+                KnockRight = false;
+            Knocked();
         }
-    }*/
+        
+    }
 }

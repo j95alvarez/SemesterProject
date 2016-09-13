@@ -5,15 +5,17 @@ public class EnemyAI : MonoBehaviour {
     public GameObject player;
     public float speed = .5F;
     public int eHealth;
+    public PlayerMovement playermove;
 
     // Use this for initialization
     void Start () {
+        //playermove = GetComponent<PlayerMovement>();
     }
 
     void Update() 
 	{
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        Debug.Log(player.transform.position);
+        //Debug.Log(player.transform.position);
         if(eHealth <= 0)
         {
             Destroy(gameObject);
