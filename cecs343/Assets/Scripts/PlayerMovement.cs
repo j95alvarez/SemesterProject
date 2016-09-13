@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        //Debug.Log(transform.localPosition);
         if (pHealth == 0)
             dead();
         //Moving Direction Detacter

@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class EnemyAI : MonoBehaviour {
-    public GameObject player;
+    //public GameObject player;
     public float speed = .5F;
     public int eHealth;
     public PlayerMovement playermove;
@@ -14,8 +14,8 @@ public class EnemyAI : MonoBehaviour {
 
     void Update() 
 	{
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        //Debug.Log(player.transform.position);
+        transform.position = Vector3.MoveTowards(transform.position, GameObject.Find("Player").transform.position, speed * Time.deltaTime);
+        Debug.Log(GameObject.Find("Player").transform.position);
         if(eHealth <= 0)
         {
             Destroy(gameObject);
