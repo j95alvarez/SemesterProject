@@ -7,12 +7,11 @@ public class ClimbingScript : MonoBehaviour {
 		player = GameObject.Find("Player");
 	}
 	void Update() {
-		//Debug.Log ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-		if (player.GetComponent<PlayerMovement> ().isClimbing) {
+		if (player.GetComponent<PlayerMovement> ().climb) {
 			if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) {
-				player.GetComponent<PlayerMovement>().climb = true;
+				player.GetComponent<PlayerMovement>().isClimbing = true;
 			}
-			if (player.GetComponent<PlayerMovement>().climb == true) {
+			if (player.GetComponent<PlayerMovement>().isClimbing) {
 				player.GetComponent<Rigidbody2D>().gravityScale = 0f;
 				player.GetComponent<BoxCollider2D>().isTrigger = true;
 			}
@@ -21,7 +20,7 @@ public class ClimbingScript : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D collide) {
         if (collide.gameObject.name == "Player") 
 		{
-			collide.GetComponent<PlayerMovement>().isClimbing = true;
+			collide.GetComponent<PlayerMovement>().climb = true;
             Debug.Log("Climbing = " + player.GetComponent<PlayerMovement>().isClimbing);
         }
     }
