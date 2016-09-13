@@ -10,22 +10,29 @@ public class PlayerMovement : MonoBehaviour
     public bool isClimbing, climb;
     public float getScaleX, getScaleY, facing, bulletspeed;
     public int pHealth;
-
+    //KNOCKS
+    public float KnockForce;
+    public float KnockTime;
+    public bool KnockRight;
+    private float KnockCounter = 0;
     //Object nasd;
 
     public float offest;
+
+    private Rigidbody2D rb2D;
+
     // Use this for initialization
     void Start() {
         getScaleX = transform.localScale.x;
         getScaleY = transform.localScale.y;
         isClimbing = climb = needRev = false;
         //facing = 1;
-        
+        rb2D = gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update() {
-
+        //Debug.Log(transform.localPosition);
         if (pHealth == 0)
             dead();
         //Moving Direction Detacter
@@ -87,6 +94,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    public void Knocked()
+    {
+        KnockCounter = 0;
+        while (KnockTime > KnockCounter)
+        {
+            KnockCounter += Time.deltaTime;
+            if (KnockRight)
+                rb2D.velocity = new Vector2(-KnockForce, KnockForce);
+            if (!KnockRight)
+                rb2D.velocity = new Vector2(KnockForce, KnockForce);
+        }
+        Debug.Log("Knock Knock Knock");
+    }
 
     void HorizontalMove(float amount) {
         transform.Translate(amount, 0, 0);
@@ -117,17 +137,16 @@ public class PlayerMovement : MonoBehaviour
         Destroy(gameObject);//blah blah blah
     }
 
-    /*void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.name == "Enemy 1") {
-            if (pHealth > 0) {
-                pHealth -= 10;
-                Debug.Log("phealth is: " + pHealth);
-            }
-           else
-            {
-                Destroy(gameObject);
-                Debug.Log("DEAD");
-            }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Enemy 1")
+        {
+            if (collision.transform.position.x > transform.position.x)
+                KnockRight = true;
+            else if (collision.transform.position.x < transform.position.x)
+                KnockRight = false;
+            Knocked();
         }
-    }*/
+        
+    }
 }
