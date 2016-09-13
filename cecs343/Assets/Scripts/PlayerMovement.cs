@@ -6,18 +6,15 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float jump;
     public GameObject target, prefab;
-    public bool needRev;
-    public bool isClimbing, climb;
-    public float getScaleX, getScaleY, facing, bulletspeed, radius;
+    public bool needRev,isClimbing, climb, inAir;
+    public float getScaleX, getScaleY, facing, bulletspeed;
     public int pHealth;
     //KNOCKS
     public float KnockForce;
     public float KnockTime;
     public bool KnockRight;
     private float KnockCounter = 0;
-    public Transform groundPoint;
-    public LayerMask groundMask;
-
+    
     public float offest;
 
     private Rigidbody2D rb2D;
@@ -29,7 +26,9 @@ public class PlayerMovement : MonoBehaviour
         isClimbing = climb = needRev = false;
         //facing = 1;
         rb2D = gameObject.GetComponent<Rigidbody2D>();
+        inAir = false;
     }
+
 
     // Update is called once per frame
     void Update() {
@@ -52,29 +51,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Basic player movement and 
-        if (Input.GetKey(KeyCode.Space) && !isClimbing) {
+        if (Input.GetKeyDown(KeyCode.Space) && !isClimbing) {
             //Debug.Log("UP");
-            //Vector2 moveDirection = 
-            
-
-            // True or false if the overlap circle is on the layer mask
-
-            // This stuff here transform the sprite depending on the number
-            // If the value is 1, the sprite/character will face right
-            // If the value is -1, the character will face left
-            if (Input.GetAxisRaw("Horizontal") == 1)
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-            else if ((Input.GetAxisRaw("Horizontal") == -1))
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space) && (Physics2D.OverlapCircle(groundPoint.position, radius, groundMask)))
-            {
+            if (!inAir) {
+                inAir = true;
                 this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jump));
             }
+            
         }
 
         if (Input.GetKey(KeyCode.LeftArrow)) {
@@ -168,6 +151,10 @@ public class PlayerMovement : MonoBehaviour
             else if (collision.transform.position.x < transform.position.x)
                 KnockRight = false;
             Knocked();
+        }
+
+        if (collision.gameObject.name == "ground") {
+            inAir = false;
         }
         
     }
