@@ -4,12 +4,13 @@ using System.Collections;
 public class CameraFollow : MonoBehaviour 
 {
 	public GameObject player;
+	public int zoom = 5;
 
 
 	// Use this for initialization
 	void Start () 
 	{
-        Camera.main.orthographicSize = 3;
+        Camera.main.orthographicSize = zoom;
 	
 	}
 	
