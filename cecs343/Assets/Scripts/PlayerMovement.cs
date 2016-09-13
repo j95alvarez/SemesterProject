@@ -10,17 +10,24 @@ public class PlayerMovement : MonoBehaviour
     public bool isClimbing, climb;
     public float getScaleX, getScaleY, facing, bulletspeed;
     public int pHealth;
-
+    //KNOCKS
+    public float KnockForce;
+    public float KnockTime;
+    public bool KnockRight;
+    private float KnockCounter = 0;
     //Object nasd;
 
     public float offest;
+
+    private Rigidbody2D rb2D;
+
     // Use this for initialization
     void Start() {
         getScaleX = transform.localScale.x;
         getScaleY = transform.localScale.y;
         isClimbing = climb = needRev = false;
         //facing = 1;
-        
+        rb2D = gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -86,6 +93,18 @@ public class PlayerMovement : MonoBehaviour
                 VerticalMove(-(speed * Time.deltaTime));
             }
         }
+    }
+    public void Knocked()
+    {
+        while (KnockTime > KnockCounter)
+        {
+            KnockCounter += Time.deltaTime;
+            if (KnockRight)
+                rb2D.velocity = new Vector2(-KnockForce, KnockForce);
+            if (!KnockRight)
+                rb2D.velocity = new Vector2(KnockForce, KnockForce);
+        }
+        Debug.Log("Knock Knock Knock");
     }
 
     void HorizontalMove(float amount) {
