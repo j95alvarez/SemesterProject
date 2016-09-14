@@ -11,7 +11,8 @@ public class ShootController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (shots > maxShots) {
+        if (shots > maxShots || Input.GetKeyDown(KeyCode.R)) {
+            Debug.Log("Reloading...");
             this.gameObject.GetComponent<PlayerMovement>().canShoot = false;
             StartCoroutine(Wait(2.0f));
             shots = 1;
