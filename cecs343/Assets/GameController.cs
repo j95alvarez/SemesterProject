@@ -13,14 +13,14 @@ public class GameController : MonoBehaviour {
 	void Update () {
         if (canStart) {
             if (Input.GetKeyDown(KeyCode.E)) {
-                Debug.Log("Player Began Game");
+                //Debug.Log("Player Began Game");
                 this.gameObject.GetComponent<Spawn>().enabled = true;
             }
         }
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-        Debug.Log(col.gameObject.name);
+        //Debug.Log(col.gameObject.name);
 
         if (col.gameObject.name == "Player") {
             canStart = true;

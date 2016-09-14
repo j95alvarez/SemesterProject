@@ -4,11 +4,14 @@ using System.Collections;
 public class Spawn : MonoBehaviour {
     //spawning would be MaxSpawnDistance - SafeDistnaces
     //popcorn!
-    public float setDTime;
-    public float time;
+    public float setSpawnTime;
+    public float timer;
     public float SafeDistnace;       //min
     public float MaxSpawnDistance;   //max
     public int Amount;
+    public int SpawnCounter=0;
+    public int SpawnLimit;
+
     private float RandomPoint;
     private int NegPosXRandom;
     public Object prefeb;
@@ -21,12 +24,19 @@ public class Spawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //count second.
-        time += Time.deltaTime;
-        if (time > setDTime)
+        if(SpawnCounter < SpawnLimit - 1)
         {
-            SpawnEnemy();
-            time = 0;
+            timer += Time.deltaTime;
+            if (timer > setSpawnTime)
+            {
+                SpawnEnemy();
+                timer = 0;
+            }
+        }else if(SpawnCounter >= SpawnLimit - 1)
+        {
+            timer = 0;
         }
+
     }
 
     void SpawnEnemy()
@@ -42,6 +52,7 @@ public class Spawn : MonoBehaviour {
             //Debug.Log("Point X = " + RandomPoint * NegPosXRandom + " Spawn !");
             GameObject newName = (GameObject)Instantiate(prefeb, Range, transform.rotation);
             newName.name = prefeb.name;
+            SpawnCounter++;
         }
     }
 }

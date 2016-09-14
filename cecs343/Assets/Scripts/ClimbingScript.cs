@@ -22,7 +22,7 @@ public class ClimbingScript : MonoBehaviour {
         if (collide.gameObject.name == "Player") 
 		{
 			collide.GetComponent<PlayerMovement>().climb = true;
-            Debug.Log("Climbing = " + player.GetComponent<PlayerMovement>().isClimbing);
+           // Debug.Log("Climbing = " + player.GetComponent<PlayerMovement>().isClimbing);
         }
     }
 
