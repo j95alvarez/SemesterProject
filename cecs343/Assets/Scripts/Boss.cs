@@ -5,8 +5,11 @@ public class Boss : MonoBehaviour {
 
     public float speed = .5F;
     public int eHealth;
+    public int AttackRange;
+    public float AttackFreq;
+    public GameObject prefab;
+    public float timer = 0;
 
-    public float counter;
     // Use this for initialization
     void Start()
     {
@@ -15,6 +18,12 @@ public class Boss : MonoBehaviour {
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, GameObject.Find("Player").transform.position, speed * Time.deltaTime);
+        if (AttackRange >= Vector3.Distance(GameObject.Find("Player").transform.position, transform.position))
+        {
+            //Debug.Log("Loaded");
+            Fire();
+        }
+        
         //Debug.Log(GameObject.Find("Player").transform.position);
         if (eHealth <= 0)
         {
@@ -30,6 +39,18 @@ public class Boss : MonoBehaviour {
             speed = 0;
             StartCoroutine(resetSpeed());
         }
+    }
+    void Fire()
+    {
+        //float timer = 0;
+        timer += Time.deltaTime;
+        if(timer >= AttackFreq)
+        {
+            Debug.Log("Fire In The Hole !");
+            Instantiate(prefab, new Vector3(-1*(transform.position.x + 0.5f), transform.position.y, transform.position.z), Quaternion.identity);
+            timer = 0;
+        }
+        
     }
     IEnumerator resetSpeed()
     {

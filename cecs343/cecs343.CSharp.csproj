@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\EnemyStatus.cs" />
     <Compile Include="Assets\Scripts\FadeAwayDamage.cs" />
+    <Compile Include="Assets\Scripts\Fireball.cs" />
     <Compile Include="Assets\Scripts\MinionOne.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerStatus.cs" />
