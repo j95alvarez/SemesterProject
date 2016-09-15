@@ -152,6 +152,14 @@ public class PlayerMovement : MonoBehaviour
                 KnockRight = false;
             Knocked();
         }
+        if (collision.gameObject.name == "Boss")
+        {
+            if (collision.transform.position.x > transform.position.x)
+                KnockRight = true;
+            else if (collision.transform.position.x < transform.position.x)
+                KnockRight = false;
+            Knocked();
+        }
 
         if (collision.gameObject.name == "ground") {
             inAir = false;
