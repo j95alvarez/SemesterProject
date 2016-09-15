@@ -14,7 +14,7 @@ public class Fireball : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (sign)
+        if (!sign)
             transform.Translate(-speed * Time.deltaTime, 0, 0);
         else
             transform.Translate(speed * Time.deltaTime, 0, 0);
