@@ -3,17 +3,21 @@ using System.Collections;
 
 public class Fireball : MonoBehaviour {
     public float speed;
+    public GameObject Dir;
 
     // Use this for initialization
     void Start()
     {
-
+        Dir = GameObject.Find("Boss");
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(-speed * Time.deltaTime, 0, 0);
+        if (!Dir.GetComponent<Boss>().turn)
+            transform.Translate(-speed * Time.deltaTime, 0, 0);
+        else
+            transform.Translate(speed * Time.deltaTime, 0, 0);
         StartCoroutine(Wait(2.0F));
     }
     void OnCollisionEnter2D(Collision2D col)

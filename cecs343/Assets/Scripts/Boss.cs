@@ -9,6 +9,8 @@ public class Boss : MonoBehaviour {
     public float AttackFreq;
     public GameObject prefab;
     public float timer = 0;
+    public float FaceDir;
+    public bool turn;
 
     // Use this for initialization
     void Start()
@@ -18,7 +20,7 @@ public class Boss : MonoBehaviour {
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, GameObject.Find("Player").transform.position, speed * Time.deltaTime);
-        Debug.Log(transform.position);
+        //Debug.Log(gameObject.transform.position.x - GameObject.Find("Player").transform.position.x);
         if (AttackRange >= Vector3.Distance(GameObject.Find("Player").transform.position, transform.position))
         {
             //Debug.Log("Loaded");
@@ -44,13 +46,23 @@ public class Boss : MonoBehaviour {
     void Fire()
     {
         //float timer = 0;
+        FaceDir = gameObject.transform.position.x - GameObject.Find("Player").transform.position.x;
         timer += Time.deltaTime;
         if(timer >= AttackFreq)
         {
             Debug.Log("Fire In The Hole !");
-            Instantiate(prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-            //Debug.Log(transform.position.x);
-            timer = 0;
+            if (FaceDir > 0)
+            {
+                Instantiate(prefab, new Vector3(gameObject.transform.position.x - 0.5f, transform.position.y, transform.position.z), Quaternion.identity);
+                timer = 0;
+                turn = false;
+            }
+            if (FaceDir < 0)
+            {
+                Instantiate(prefab, new Vector3(gameObject.transform.position.x + 0.5f, transform.position.y, transform.position.z), Quaternion.identity);
+                timer = 0;
+                turn = true;
+            }
         }
         
     }
