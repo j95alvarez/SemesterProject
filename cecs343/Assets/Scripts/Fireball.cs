@@ -4,17 +4,19 @@ using System.Collections;
 public class Fireball : MonoBehaviour {
     public float speed;
     public GameObject Dir;
+    public bool Sign;
 
     // Use this for initialization
     void Start()
     {
         Dir = GameObject.Find("Boss");
+        Sign = Dir.GetComponent<Boss>().turn;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!Dir.GetComponent<Boss>().turn)
+        if (!Sign)
             transform.Translate(-speed * Time.deltaTime, 0, 0);
         else
             transform.Translate(speed * Time.deltaTime, 0, 0);

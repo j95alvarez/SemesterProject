@@ -15,15 +15,10 @@ public class bullet : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         if (Sign)
-        {
             transform.Translate(-speed * Time.deltaTime, 0, 0);
-            StartCoroutine(Wait(2.0F));
-        }
         else
-        {
             transform.Translate(speed * Time.deltaTime, 0, 0);
-            StartCoroutine(Wait(2.0F));
-        }
+        StartCoroutine(Wait(2.0F));
     }
     void OnCollisionEnter2D(Collision2D col)
     {
