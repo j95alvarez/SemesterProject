@@ -18,6 +18,7 @@ public class Boss : MonoBehaviour {
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, GameObject.Find("Player").transform.position, speed * Time.deltaTime);
+        Debug.Log(transform.position);
         if (AttackRange >= Vector3.Distance(GameObject.Find("Player").transform.position, transform.position))
         {
             //Debug.Log("Loaded");
@@ -47,7 +48,8 @@ public class Boss : MonoBehaviour {
         if(timer >= AttackFreq)
         {
             Debug.Log("Fire In The Hole !");
-            Instantiate(prefab, new Vector3(-1*(transform.position.x + 0.5f), transform.position.y, transform.position.z), Quaternion.identity);
+            Instantiate(prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+            //Debug.Log(transform.position.x);
             timer = 0;
         }
         
