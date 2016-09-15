@@ -5,27 +5,49 @@ public class SmarterCamera : MonoBehaviour {
 
     public GameObject player;
     public float xThreshold, yThreshold;
-    public int followSpeed;
-    public float currentX;
-    public double what;
-    public Vector3 position;
+    public float followSpeed;
+    public int maxZoom, minZoom;
 
-	// Use this for initialization
-	void Start () {
-        Camera.main.orthographicSize = 5;
+    // Use this for initialization
+    void Start () {
+        Camera.main.orthographicSize = 4;
+        followSpeed = 2*GameObject.Find("Player").GetComponent<PlayerMovement>().speed;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        position = player.transform.position;
+	void LateUpdate () {
+        var position = Camera.main.WorldToViewportPoint(player.transform.position);
 
-        currentX = position.x;
-        //if(position.x < 1.0/xThreshold) {
-        //    transform.Translate(followSpeed*-1*Time.deltaTime, 0, 0);
-        //    transform.Translate(1, 0, 0);
-        //}
-        what = 1.0 / xThreshold;
+        if(position.x < 1.0/xThreshold)
+        {
+            transform.Translate(followSpeed*-1*Time.deltaTime, 0, 0); 
+        }
+        if(position.x > 2.0/xThreshold)
+        {
+            transform.Translate(followSpeed * Time.deltaTime, 0, 0);
+        }
+        if(position.y < 1.0 / yThreshold)
+        {
+            transform.Translate(0, followSpeed * -1 * Time.deltaTime, 0);
+        }
+        if(position.y > 2.0/ yThreshold)
+        {
+            transform.Translate(0, followSpeed * Time.deltaTime, 0);
+        }
 
-        //transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -1);
+        if(Input.GetKeyDown(KeyCode.Equals)) zoomIn();
+        if(Input.GetKeyDown(KeyCode.Minus)) zoomOut();
+
+    }
+
+    void zoomIn ()
+    {
+        if (Camera.main.orthographicSize > minZoom)
+            Camera.main.orthographicSize--;
+    }
+    void zoomOut ()
+    {
+        if (Camera.main.orthographicSize < maxZoom)
+            Camera.main.orthographicSize++;
     }
 }
