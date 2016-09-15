@@ -24,7 +24,8 @@ public class Boss : MonoBehaviour {
         if (AttackRange >= Vector3.Distance(GameObject.Find("Player").transform.position, transform.position))
         {
             //Debug.Log("Loaded");
-            Fire();
+            //Fire();
+            StartCoroutine(Wait(2.0f));
         }
         
         //Debug.Log(GameObject.Find("Player").transform.position);
@@ -46,20 +47,20 @@ public class Boss : MonoBehaviour {
     void Fire()
     {
         //float timer = 0;
-        FaceDir = gameObject.transform.position.x - GameObject.Find("Player").transform.position.x;
+        FaceDir = this.gameObject.transform.position.x - GameObject.Find("Player").transform.position.x;
         timer += Time.deltaTime;
         if(timer >= AttackFreq)
         {
             Debug.Log("Fire In The Hole !");
             if (FaceDir > 0)
             {
-                Instantiate(prefab, new Vector3(gameObject.transform.position.x - 0.5f, transform.position.y, transform.position.z), Quaternion.identity);
+                Instantiate(prefab, new Vector3(this.gameObject.transform.position.x - 0.5f, transform.position.y, transform.position.z), Quaternion.identity);
                 timer = 0;
                 turn = false;
             }
             if (FaceDir < 0)
             {
-                Instantiate(prefab, new Vector3(gameObject.transform.position.x + 0.5f, transform.position.y, transform.position.z), Quaternion.identity);
+                Instantiate(prefab, new Vector3(this.gameObject.transform.position.x + 0.5f, transform.position.y, transform.position.z), Quaternion.identity);
                 timer = 0;
                 turn = true;
             }
@@ -70,5 +71,11 @@ public class Boss : MonoBehaviour {
     {
         yield return new WaitForSeconds(1);
         speed = .5f;
+    }
+
+    IEnumerator Wait(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        Fire();
     }
 }
