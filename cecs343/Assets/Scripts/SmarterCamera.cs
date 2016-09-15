@@ -22,7 +22,7 @@ public class SmarterCamera : MonoBehaviour {
         {
             transform.Translate(followSpeed*-1*Time.deltaTime, 0, 0); 
         }
-        if(position.x > 2.0/xThreshold)
+        if(position.x > (xThreshold-1)/xThreshold)
         {
             transform.Translate(followSpeed * Time.deltaTime, 0, 0);
         }
@@ -30,7 +30,7 @@ public class SmarterCamera : MonoBehaviour {
         {
             transform.Translate(0, followSpeed * -1 * Time.deltaTime, 0);
         }
-        if(position.y > 2.0/ yThreshold)
+        if(position.y > (yThreshold-1)/ yThreshold)
         {
             transform.Translate(0, followSpeed * Time.deltaTime, 0);
         }
