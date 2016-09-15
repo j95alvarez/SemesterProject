@@ -45,17 +45,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\GameController.cs" />
+     <Compile Include="Assets\Scripts\Boss.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\ClimbingScript.cs" />
      <Compile Include="Assets\Scripts\ColliderDetect.cs" />
      <Compile Include="Assets\Scripts\EnemyAI.cs" />
      <Compile Include="Assets\Scripts\EnemyStatus.cs" />
      <Compile Include="Assets\Scripts\FadeAwayDamage.cs" />
+     <Compile Include="Assets\Scripts\Fireball.cs" />
      <Compile Include="Assets\Scripts\MinionOne.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\PlayerStatus.cs" />
      <Compile Include="Assets\Scripts\Spawn.cs" />
      <Compile Include="Assets\Scripts\bullet.cs" />
+     <Compile Include="Assets\ShootController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
