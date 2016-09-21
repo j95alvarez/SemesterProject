@@ -28,18 +28,17 @@ public class SplashBullet : MonoBehaviour {
         if (startTime + duration < Time.time) Destroy(gameObject); // Destroy object after duration seconds.
 
         internalCooldown -= Time.deltaTime;
-
+        Debug.Log(internalCooldown);
         StartCoroutine(Wait(2.0F));
     }
     // On contact with an enemy, inflict damage every frame.
     void OnTriggerStay2D(Collider2D col)
     {
+        
         if (col.gameObject.name == "Enemy 1" && internalCooldown <= 0)
         {
-            //Debug.Log("Splash attack did damage.");
-            damagePerTick = (int)System.Math.Ceiling(dps / hitsPerSecond);
-            col.gameObject.GetComponent<EnemyAI>().eHealth -= damagePerTick;
-            internalCooldown = 1 / hitsPerSecond;
+            Debug.Log("Splash attack did damage.");
+            col.gameObject.GetComponent<EnemyAI>().eHealth -= 1;
         }
     }
     

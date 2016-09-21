@@ -26,4 +26,11 @@ public class GameController : MonoBehaviour {
             canStart = true;
         }
     }
+
+    void OnTriggerExit2D(Collider2D col) {
+        if (col.gameObject.name == "Player") {
+            canStart = false;
+        }
+        
+    }
 }
