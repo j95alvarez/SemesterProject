@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float jump;
     public GameObject target, prefab, SpecialBullet1;
-    public bool needRev,isClimbing, climb, inAir, canShoot;
+    public bool needRev,isClimbing, climb, inAir, canShoot,specialShot;
     public float getScaleX, getScaleY, facing, bulletspeed;
     public int pHealth;
     public int splashDPS;
@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         isClimbing = climb = needRev = inAir = false;
         //facing = 1;
         rb2D = gameObject.GetComponent<Rigidbody2D>();
-        canShoot = true;
+        canShoot = specialShot = true;
     }
 
 
@@ -103,7 +103,10 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && special1TimeLeft < 0) Special1();
+        if (Input.GetKeyDown(KeyCode.X) && special1TimeLeft < 0)
+        {
+            Special1();
+        }
 
         special1TimeLeft -= Time.deltaTime; // Progress special cooldown
 
