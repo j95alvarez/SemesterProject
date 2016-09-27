@@ -5,16 +5,22 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed;
     public float jump;
-    public GameObject target, prefab;
-    public bool needRev,isClimbing, climb, inAir, canShoot;
+    public GameObject target, prefab, SpecialBullet1;
+    public bool needRev,isClimbing, climb, inAir, canShoot,specialShot;
     public float getScaleX, getScaleY, facing, bulletspeed;
     public int pHealth;
+    public int splashDPS;
+
     //KNOCKS
     public float KnockForce;
     public float KnockTime;
     public bool KnockRight;
     private float KnockCounter = 0;
-    
+
+    //Projectile Variables
+    public float special1Cooldown;
+    private float special1TimeLeft;
+
     public float offest;
 
     private Rigidbody2D rb2D;
@@ -26,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         isClimbing = climb = needRev = inAir = false;
         //facing = 1;
         rb2D = gameObject.GetComponent<Rigidbody2D>();
-        canShoot = true;
+        canShoot = specialShot = true;
     }
 
 
@@ -96,6 +102,14 @@ public class PlayerMovement : MonoBehaviour
                 VerticalMove(-(speed * Time.deltaTime));
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.X) && special1TimeLeft < 0)
+        {
+            Special1();
+        }
+
+        special1TimeLeft -= Time.deltaTime; // Progress special cooldown
+
     }
     public void Knocked()
     {
@@ -129,6 +143,21 @@ public class PlayerMovement : MonoBehaviour
             Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
 
         prefab.GetComponent<bullet>().speed = bulletspeed;
+
+    }
+
+    void Special1()
+    {
+        Vector3 spawnLocation = transform.position;
+
+        if (needRev)
+            spawnLocation.x -= offest;
+        else
+            spawnLocation.x += offest;
+
+        Instantiate(SpecialBullet1, spawnLocation, Quaternion.identity);
+
+        special1TimeLeft = special1Cooldown;
 
     }
 

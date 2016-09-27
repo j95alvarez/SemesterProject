@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\GameController.cs" />
+     <Compile Include="Assets\HealthBar.cs" />
      <Compile Include="Assets\Scripts\Boss.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\ClimbingScript.cs" />
@@ -57,7 +58,9 @@
      <Compile Include="Assets\Scripts\MinionOne.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\PlayerStatus.cs" />
+     <Compile Include="Assets\Scripts\SmarterCamera.cs" />
      <Compile Include="Assets\Scripts\Spawn.cs" />
+     <Compile Include="Assets\Scripts\SplashBullet.cs" />
      <Compile Include="Assets\Scripts\bullet.cs" />
      <Compile Include="Assets\ShootController.cs" />
  <Reference Include="UnityEngine.UI">
