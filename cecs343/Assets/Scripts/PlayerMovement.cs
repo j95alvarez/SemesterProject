@@ -4,13 +4,12 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-    public float jump;
     public GameObject target, prefab, SpecialBullet1;
     public bool needRev,isClimbing, climb, inAir, canShoot,specialShot;
     public float getScaleX, getScaleY, facing, bulletspeed;
     public int pHealth;
     public int splashDPS;
-
+    public float jumpCounter;
     //KNOCKS
     public float KnockForce;
     public float KnockTime;
@@ -22,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private float special1TimeLeft;
 
     public float offest;
+
+    int counter = 0;
 
     private Rigidbody2D rb2D;
 
@@ -56,18 +57,22 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Basic player movement and 
-        if (Input.GetKeyDown(KeyCode.Space) && !isClimbing) {
+        if (Input.GetKey("space") && !isClimbing) {
             //Debug.Log("UP");
             if (!inAir) {
-                inAir = true;
-                this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jump));
+                jumpCounter += Time.deltaTime;
+                if (jumpCounter < 0.2)
+                    this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 2.5f));
             }
-            
+        }
+        if (Input.GetKeyUp("space"))
+        {
+            jumpCounter = 0;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow)) {
             //while player change face direction
-            //facing = -1;
+            //facing = -1
             if (needRev) {
                 //Debug.Log("reverse1");
                 HorizontalMove((speed * Time.deltaTime));
