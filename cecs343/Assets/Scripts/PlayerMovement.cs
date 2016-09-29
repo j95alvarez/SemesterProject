@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private float special1TimeLeft;
 
     public float offest;
+    public float speedOffest = 10;
 
     int counter = 0;
 
@@ -64,19 +65,21 @@ public class PlayerMovement : MonoBehaviour
                 inAir = true;
                 this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0,jump+=100));
             }*/
-            //if(Time.deltaTime < 0.002)
-            //    this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jump));
+
             jumpCounter += Time.deltaTime;
-            if (jumpCounter < 0.5)
-                this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 15));
+            if (jumpCounter < 0.5 && !inAir)
+            {
+                this.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 1.2f);
+            }
             else
             {
-                this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 0));
-            }
+                //this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 0));
                 Debug.Log("Time's Up");
+            }
         }
         if (Input.GetKeyUp("space") && !isClimbing)
         {
+            inAir = true;
             jumpCounter = 0;
         }
 
