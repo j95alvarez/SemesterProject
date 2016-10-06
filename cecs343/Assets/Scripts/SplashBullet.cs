@@ -31,11 +31,12 @@ public class SplashBullet : MonoBehaviour {
         Debug.Log(internalCooldown);
         StartCoroutine(Wait(2.0F));
     }
+
     // On contact with an enemy, inflict damage every frame.
     void OnTriggerStay2D(Collider2D col)
     {
         
-        if (col.gameObject.name == "Enemy 1" && internalCooldown <= 0)
+        if (col.gameObject.name == "Enemy 1")
         {
             Debug.Log("Splash attack did damage.");
             col.gameObject.GetComponent<EnemyAI>().eHealth -= 1;
