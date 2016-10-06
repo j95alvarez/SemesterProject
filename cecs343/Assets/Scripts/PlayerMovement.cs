@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed;
     public GameObject target, prefab, SpecialBullet1;
-    public bool needRev,isClimbing, climb, inAir, canShoot,specialShot;
+    public bool needRev,isClimbing, climb, inAir, canShoot, specialShot;
     public float getScaleX, getScaleY, facing, bulletspeed;
     public int pHealth;
     public int splashDPS;
@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && special1TimeLeft < 0)
+        if (Input.GetKeyDown(KeyCode.X) && specialShot)
         {
             Special1();
         }
@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
 
     
     void Attack() {
-        this.gameObject.GetComponent<ShootController>().shots += 1;
+        this.gameObject.GetComponent<ShootController>().shots -= 1;
 
         if (needRev)
             Instantiate(prefab, new Vector3(transform.position.x - offest, transform.position.y, transform.position.z), Quaternion.identity);
@@ -153,6 +153,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Special1()
     {
+        this.gameObject.GetComponent<ShootController>().specialShot -= 1;
         Vector3 spawnLocation = transform.position;
 
         if (needRev)

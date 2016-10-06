@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour {
 	void Update () {
         if (canStart) {
             if (Input.GetKeyDown(KeyCode.E)) {
-                //Debug.Log("Player Began Game");
+                Debug.Log("Player Began Game");
                 this.gameObject.GetComponent<Spawn>().enabled = true;
             }
         }
