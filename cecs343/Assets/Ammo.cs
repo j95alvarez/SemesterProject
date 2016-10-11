@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Ammo : MonoBehaviour {
     public GameObject player;
-    private Text ammo;
+    private Text ammo,killCount;
     private int maxAmmo;
 
     // Use this for initialization
@@ -12,7 +12,8 @@ public class Ammo : MonoBehaviour {
         ammo = GetComponent<Text>();
         maxAmmo = player.GetComponent<ShootController>().maxShots;
         ammo.text = "Ammo: " + (player.GetComponent<ShootController>().shots) + " / " + maxAmmo;
-        ammo.text += "\n Special: 1 / 1" ;
+        ammo.text += "\n Special: 1 / 1";
+        ammo.text += "\n Kill: " + killCount;
     }
 	
 	// Update is called once per frame
@@ -22,6 +23,6 @@ public class Ammo : MonoBehaviour {
 
         ammo.text += (!player.GetComponent<PlayerMovement>().specialShot) ?
             "\nSpecial: Reloading..." : "\nSpecial: 1 / 1";
-
+        ammo.text += "\nKill: " + player.GetComponent<PlayerMovement>().EneDCount.ToString();
     }
 }

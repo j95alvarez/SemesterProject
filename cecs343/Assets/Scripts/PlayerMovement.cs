@@ -3,16 +3,16 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed;
+
     public GameObject target, prefab, SpecialBullet1;
     public bool needRev,isClimbing, climb, inAir, canShoot, specialShot;
-    public float getScaleX, getScaleY, facing, bulletspeed;
-    public int pHealth;
-    public int splashDPS;
+    public float getScaleX, getScaleY, facing, bulletspeed, speed;
+    public int pHealth, splashDPS , EneDCount;
+
     public float jumpCounter;
+
     //KNOCKS
-    public float KnockForce;
-    public float KnockTime;
+    public float KnockForce, KnockTime;
     public bool KnockRight;
     private float KnockCounter = 0;
 
@@ -22,12 +22,11 @@ public class PlayerMovement : MonoBehaviour
 
     public float offest;
 
-    int counter = 0;
-
     private Rigidbody2D rb2D;
 
     // Use this for initialization
     void Start() {
+        EneDCount = 0;
         getScaleX = transform.localScale.x;
         getScaleY = transform.localScale.y;
         isClimbing = climb = needRev = inAir = false;
