@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyAI : MonoBehaviour {
     public float speed = .5F;
     public int eHealth;
-    public GameObject spawn;
+    public GameObject spawn, EneKCount;
     public int DistanceToDelete;
     public float ChkDistInterval;
 
@@ -13,6 +13,7 @@ public class EnemyAI : MonoBehaviour {
     void Start () {
         //playermove = GetComponent<PlayerMovement>();
         spawn = GameObject.Find("Controller");
+        EneKCount = GameObject.Find("Player");
     }
 
     void Update() 
@@ -28,6 +29,7 @@ public class EnemyAI : MonoBehaviour {
         }
         if(eHealth <= 0)
         {
+            EneKCount.gameObject.GetComponent<PlayerMovement>().EneDCount += 1;
             spawn.gameObject.GetComponent<Spawn>().SpawnCounter--;
             Destroy(gameObject);
         }
