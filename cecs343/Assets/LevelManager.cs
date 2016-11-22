@@ -2,7 +2,13 @@
 using System.Collections;
 
 public class LevelManager : MonoBehaviour {
-    public Transform mainMenu, optionsMenu;
+    public Transform mainMenu, optionsMenu, brightnessMenu;
+
+    void Start() {
+        mainMenu.gameObject.SetActive(true);
+        optionsMenu.gameObject.SetActive(false);
+        brightnessMenu.gameObject.SetActive(false);
+    }
 
     public void LoadScene(string game) {
         Application.LoadLevel(game);
@@ -23,5 +29,20 @@ public class LevelManager : MonoBehaviour {
             optionsMenu.gameObject.SetActive(clicked);
             mainMenu.gameObject.SetActive(!clicked);
         }
+    }
+
+    public void BrightnessMenu(bool clicked) {
+        if (clicked)
+        {
+            brightnessMenu.gameObject.SetActive(clicked);
+            optionsMenu.gameObject.SetActive(!clicked);
+        }
+        else
+        {
+            brightnessMenu.gameObject.SetActive(clicked);
+            optionsMenu.gameObject.SetActive(!clicked);
+        }
+
+
     }
 }

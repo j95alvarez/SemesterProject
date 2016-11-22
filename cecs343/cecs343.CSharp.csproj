@@ -82,6 +82,7 @@
     <Compile Include="Assets\GameController.cs" />
     <Compile Include="Assets\HealthBar.cs" />
     <Compile Include="Assets\LevelManager.cs" />
+    <Compile Include="Assets\Pause.cs" />
     <Compile Include="Assets\Scripts\Boss.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\ClimbingScript.cs" />
