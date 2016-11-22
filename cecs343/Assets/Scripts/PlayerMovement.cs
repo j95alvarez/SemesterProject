@@ -55,20 +55,6 @@ public class PlayerMovement : MonoBehaviour
             needRev = true;
         }
 
-        // Basic player movement and 
-        if (Input.GetKey("space") && !isClimbing) {
-            //Debug.Log("UP");
-            if (!inAir) {
-                jumpCounter += Time.deltaTime;
-                if (jumpCounter < 0.2)
-                    this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 2.5f));
-            }
-        }
-        if (Input.GetKeyUp("space"))
-        {
-            jumpCounter = 0;
-        }
-
         if (Input.GetKey(KeyCode.LeftArrow)) {
             //while player change face direction
             //facing = -1
