@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public GameObject target, prefab, SpecialBullet1;
-    public bool needRev,isClimbing, climb, inAir, canShoot, specialShot;
+    public bool needRev,isClimbing, climb, inAir, canShoot, isShooting, specialShot;
     public float getScaleX, getScaleY, facing, bulletspeed, speed;
     public int pHealth, splashDPS , EneDCount;
 
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         EneDCount = 0;
         getScaleX = transform.localScale.x;
         getScaleY = transform.localScale.y;
-        isClimbing = climb = needRev = inAir = false;
+        isClimbing = climb = needRev = inAir = isShooting = false;
         //facing = 1;
         rb2D = gameObject.GetComponent<Rigidbody2D>();
         canShoot = specialShot = true;
@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
             needRev = true;
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow)) {
+        if (Input.GetKey(KeyCode.LeftArrow) && !isShooting) {
             //while player change face direction
             //facing = -1
             if (needRev) {
@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.RightArrow) && !isShooting) {
             //facing = 1;
             if (needRev) {
                 //Debug.Log("reverse2");
@@ -80,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Z) && !isClimbing && canShoot) {
+            isShooting = true;
             Attack();
         }
 
@@ -133,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
             Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
 
         prefab.GetComponent<bullet>().speed = bulletspeed;
-
+        isShooting = false;
     }
 
     void Special1()
