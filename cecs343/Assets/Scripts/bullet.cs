@@ -21,7 +21,7 @@ public class bullet : MonoBehaviour {
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.name == "Enemy 1")
+        if (col.gameObject.name == "Enemy")
         {
             col.gameObject.GetComponent<EnemyAI>().eHealth -= 20;
         }

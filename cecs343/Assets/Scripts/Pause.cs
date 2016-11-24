@@ -3,11 +3,13 @@ using System.Collections;
 
 public class Pause : MonoBehaviour {
     private bool pause;
-    public Transform pauseMenu;
+    public Transform pauseMenu, gameOverMenu;
+    public GameObject player;
 
     // Use this for initialization
     void Start () {
         pauseMenu.gameObject.SetActive(false);
+        gameOverMenu.gameObject.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -16,10 +18,19 @@ public class Pause : MonoBehaviour {
             PauseMenu(true);
             Time.timeScale = 0;
         }
+
+        if (player.gameObject.GetComponent<PlayerMovement>().pHealth <= 0) {
+            GameOverMenu(true);
+            Time.timeScale = 0;
+        }
 	}
 
     void PauseMenu(bool pause) {
         pauseMenu.gameObject.SetActive(pause);
+    }
+
+    void GameOverMenu(bool active) {
+        gameOverMenu.gameObject.SetActive(active);
     }
 
     public void Continue(bool clicked) {
