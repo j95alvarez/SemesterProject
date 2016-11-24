@@ -22,7 +22,6 @@ public class jump : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        Debug.Log("IsGrounded: " + IsGrounded());
         if (Input.GetKeyDown(KeyCode.Space)) {
             _jump = true;
         }

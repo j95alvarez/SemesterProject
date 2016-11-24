@@ -36,7 +36,7 @@ public class SplashBullet : MonoBehaviour {
     void OnTriggerStay2D(Collider2D col)
     {
         
-        if (col.gameObject.name == "Enemy 1")
+        if (col.gameObject.name == "Enemy")
         {
             Debug.Log("Splash attack did damage.");
             col.gameObject.GetComponent<EnemyAI>().eHealth -= 1;
