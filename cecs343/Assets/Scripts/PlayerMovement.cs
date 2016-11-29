@@ -5,9 +5,11 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public GameObject target, prefab, SpecialBullet1;
-    public bool needRev,isClimbing, climb, inAir, canShoot, specialShot;
+    public bool needRev,isClimbing, climb, inAir, canShoot, specialShot, isWalking;
     public float getScaleX, getScaleY, facing, bulletspeed, speed;
     public int pHealth, splashDPS , EneDCount;
+
+	Animator animatorObj;
 
     public float jumpCounter;
 
@@ -29,10 +31,11 @@ public class PlayerMovement : MonoBehaviour
         EneDCount = 0;
         getScaleX = transform.localScale.x;
         getScaleY = transform.localScale.y;
-        isClimbing = climb = needRev = inAir = false;
+        isClimbing = isWalking = climb = needRev = inAir = false;
         //facing = 1;
         rb2D = gameObject.GetComponent<Rigidbody2D>();
-        canShoot = specialShot = true;
+		canShoot = specialShot = true;
+		animatorObj = gameObject.GetComponent<Animator> ();
     }
 
 
@@ -69,29 +72,32 @@ public class PlayerMovement : MonoBehaviour
             jumpCounter = 0;
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow)) {
-            //while player change face direction
-            //facing = -1
-            if (needRev) {
-                //Debug.Log("reverse1");
-                HorizontalMove((speed * Time.deltaTime));
-            } else {
-                //Debug.Log("Left");
-                HorizontalMove(-(speed * Time.deltaTime));
-            }
-        }
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			//while player change face direction
+			//facing = -1
+			isWalking = true;
+			if (needRev) {
+				//Debug.Log("reverse1");
+				HorizontalMove ((speed * Time.deltaTime));
+			} else {
+				//Debug.Log("Left");
+				HorizontalMove (-(speed * Time.deltaTime));
+			}
+		}
+		else if (Input.GetKey (KeyCode.RightArrow)) 
+		{
+			//facing = 1;
+			isWalking = true;
+			if (needRev) {
+				//Debug.Log("reverse2");
+				HorizontalMove (-(speed * Time.deltaTime));
+			} else {
+				//Debug.Log("Right");
+				HorizontalMove (speed * Time.deltaTime);
+			}
 
-        if (Input.GetKey(KeyCode.RightArrow)) {
-            //facing = 1;
-            if (needRev) {
-                //Debug.Log("reverse2");
-                HorizontalMove(-(speed * Time.deltaTime));
-            } else {
-                //Debug.Log("Right");
-                HorizontalMove(speed * Time.deltaTime);
-            }
-
-        }
+		} else 
+			isWalking = false;
 
         if (Input.GetKeyDown(KeyCode.Z) && !isClimbing && canShoot) {
             Attack();
@@ -113,6 +119,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         special1TimeLeft -= Time.deltaTime; // Progress special cooldown
+
+		//Animations
+		if (isWalking == true && speed != 0) 
+		{
+			animatorObj.Play ("Player_run");
+		} else if(speed != 0)
+			animatorObj.Play ("Player_idle");
 
     }
     public void Knocked()
@@ -139,16 +152,28 @@ public class PlayerMovement : MonoBehaviour
 
     
     void Attack() {
+		speed = 0; 
+		animatorObj.Play ("Player_shoot");
         this.gameObject.GetComponent<ShootController>().shots -= 1;
 
         if (needRev)
-            Instantiate(prefab, new Vector3(transform.position.x - offest, transform.position.y, transform.position.z), Quaternion.identity);
+            Instantiate(prefab, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), Quaternion.identity);
         else
-            Instantiate(prefab, new Vector3(transform.position.x + offest, transform.position.y, transform.position.z), Quaternion.identity);
+            Instantiate(prefab, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), Quaternion.identity);
 
         prefab.GetComponent<bullet>().speed = bulletspeed;
+		StartCoroutine (wait ());
+
+
 
     }
+
+	IEnumerator wait()
+	{
+		yield return new WaitForSeconds(0.5f);
+		//animatorObj.Play ("Player_idle");
+		speed = 4;
+	}
 
     void Special1()
     {
