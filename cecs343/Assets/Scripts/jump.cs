@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class jump : MonoBehaviour {
+
+	Animator animatorObj;
+
     [SerializeField]
     private Transform[] groundPoints;
 
@@ -16,13 +19,15 @@ public class jump : MonoBehaviour {
     private float jumpForce;
 
 	// Use this for initialization
-	void Start () {
-        
+	void Start () 
+	{
+		animatorObj = gameObject.GetComponent<Animator> ();
 	}
 
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
+			animatorObj.Play ("Player_jump");
             _jump = true;
         }
 
