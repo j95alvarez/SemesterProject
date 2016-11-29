@@ -11,7 +11,7 @@ public class SmarterCamera : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Camera.main.orthographicSize = 4;
-        followSpeed = 2*GameObject.Find("Player").GetComponent<PlayerMovement>().speed;
+        followSpeed = 1*GameObject.Find("Player").GetComponent<PlayerMovement>().speed;
 	}
 	
 	// Update is called once per frame
