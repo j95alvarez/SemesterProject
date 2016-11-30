@@ -8,6 +8,7 @@ public class Pause : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        Time.timeScale = 1;
         pauseMenu.gameObject.SetActive(false);
         gameOverMenu.gameObject.SetActive(false);
     }
