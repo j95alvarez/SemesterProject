@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BossAI : MonoBehaviour {
     public GameObject player, projectile;
+    public int bossHP;
 
     [SerializeField]
     private float speed, offest;
@@ -28,6 +29,10 @@ public class BossAI : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (bossHP <= 0) {
+            Time.timeScale = 0;
+        }
+
         NeedsFlip();
         RangeAttack();
         RushAttack();
@@ -73,7 +78,6 @@ public class BossAI : MonoBehaviour {
     }
 
     void RushAttack() {
-        Debug.Log(canRush);
         if (CalculateMagnitude() < 5 && canRush) {
             canRush = false;
             if (faceingLeft) {
@@ -100,7 +104,7 @@ public class BossAI : MonoBehaviour {
     float CalculateMagnitude() {
         Vector3 vec = new Vector3((gameObject.transform.position.x - player.gameObject.transform.position.x), gameObject.transform.position.y - player.gameObject.transform.position.y, 0);
         float mag = Mathf.Sqrt(Mathf.Pow(vec.x, 2) + Mathf.Pow(vec.y, 2));
-        Debug.Log("Magnitude: " + mag);
+        //Debug.Log("Magnitude: " + mag);
         return Mathf.Sqrt(Mathf.Pow(vec.x, 2) + Mathf.Pow(vec.y, 2));
 
     }
