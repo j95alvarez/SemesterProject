@@ -2,9 +2,10 @@
 using System.Collections;
 
 public class Pause : MonoBehaviour {
-    private bool pause;
+    private bool pause, active;
     public Transform pauseMenu, gameOverMenu;
     public GameObject player;
+
 
     // Use this for initialization
     void Start () {
