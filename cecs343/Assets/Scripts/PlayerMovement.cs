@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
 	public GameObject prefab, SpecialBullet1;
-	public bool needRev,isClimbing, climb, inAir, canShoot, specialShot, isWalking;
+	public bool needRev,isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack;
 	public float getScaleX, getScaleY, facing, bulletspeed, speed;
 	public int pHealth, splashDPS , EneDCount;
 
@@ -26,16 +26,21 @@ public class PlayerMovement : MonoBehaviour
 
 	private Rigidbody2D rb2D;
 
-	// Use this for initialization
-	void Start() {
+    [SerializeField]
+    private int shotForce;
+
+    private Vector2 gravity;
+    // Use this for initialization
+    void Start() {
 		EneDCount = 0;
 		getScaleX = transform.localScale.x;
 		getScaleY = transform.localScale.y;
 		isClimbing = climb = needRev = inAir = false;
 		//facing = 1;
 		rb2D = gameObject.GetComponent<Rigidbody2D>();
-		canShoot = specialShot = true;
+		canShoot = specialShot = canAttack = true;
 		animatorObj = gameObject.GetComponent<Animator> ();
+        gravity = Physics2D.gravity;
 	}
 
 
@@ -61,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			//while player change face direction
 			//facing = -1
-			isWalking = true;
+			isWalking = facingLeft = true;
 			if (needRev) {
 				//Debug.Log("reverse1");
 				HorizontalMove ((speed * Time.deltaTime));
@@ -74,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			//facing = 1;
 			isWalking = true;
+            facingLeft = false;
 			if (needRev) {
 				//Debug.Log("reverse2");
 				HorizontalMove (-(speed * Time.deltaTime));
@@ -84,6 +90,20 @@ public class PlayerMovement : MonoBehaviour
 		} 
 		else 
 			isWalking = false;
+
+
+        if (Input.GetKeyDown(KeyCode.C)) {
+            canAttack = false;
+            if (facingLeft) {
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(shotForce, 0));
+            }
+
+            else {
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(-shotForce, 0));
+            }
+
+            StartCoroutine(DodgeCoolDown());
+        }
 
 		if (Input.GetKeyDown(KeyCode.Z) && !isClimbing && canShoot) {
 			Attack();
@@ -115,6 +135,13 @@ public class PlayerMovement : MonoBehaviour
 
 
 	}
+
+
+    IEnumerator DodgeCoolDown() {
+        yield return new WaitForSeconds(1);
+        canAttack = true;
+    }
+
 	public void Knocked()
 	{
 		KnockCounter = 0;
