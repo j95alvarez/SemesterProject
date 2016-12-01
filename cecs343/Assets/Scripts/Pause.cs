@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Pause : MonoBehaviour {
     private bool pause, active;
-    public Transform pauseMenu, gameOverMenu;
-    public GameObject player;
+    public Transform pauseMenu, gameOverMenu, gameCompleted;
+    public GameObject player, boss;
 
 
     // Use this for initialization
@@ -12,6 +12,7 @@ public class Pause : MonoBehaviour {
         Time.timeScale = 1;
         pauseMenu.gameObject.SetActive(false);
         gameOverMenu.gameObject.SetActive(false);
+        gameCompleted.gameObject.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -25,6 +26,11 @@ public class Pause : MonoBehaviour {
             GameOverMenu(true);
             Time.timeScale = 0;
         }
+
+        if (boss.gameObject.GetComponent<BossAI>().bossHP <= 0) {
+            GameCompleted(true);
+            Time.timeScale = 0;
+        }
 	}
 
     void PauseMenu(bool pause) {
@@ -33,6 +39,10 @@ public class Pause : MonoBehaviour {
 
     void GameOverMenu(bool active) {
         gameOverMenu.gameObject.SetActive(active);
+    }
+
+    void GameCompleted(bool active) {
+        gameCompleted.gameObject.SetActive(active);
     }
 
     public void Continue(bool clicked) {
