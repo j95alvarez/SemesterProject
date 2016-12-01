@@ -6,16 +6,21 @@ public class Projectile : MonoBehaviour {
     private float speed;
 
     public bool shot;
+
+    public int projectileHP;
     
 
     // Use this for initialization
     void Start () {
-        //GetComponent<Rigidbody2D>().AddForce(new Vector2(-shotForce, shotForce));
+        gameObject.name = "Projectile";
         shot = true;
     }
 	
 	// Update is called once per frame
 	void Update () {
+        if (projectileHP <= 0) {
+            Destroy(gameObject);
+        }
         if (shot) {
             shot = false;
             StartCoroutine(Delay());
@@ -30,6 +35,11 @@ public class Projectile : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D col) {
+
+        if (col.gameObject.name == "Bullet")
+            Destroy(gameObject);
+
+
         if (col.gameObject.name == "Player") {
             if (col.gameObject.GetComponent<PlayerMovement>().canAttack) {
                 col.gameObject.GetComponent<PlayerMovement>().pHealth -= 30;
@@ -38,4 +48,6 @@ public class Projectile : MonoBehaviour {
             
         }
     }
+
+
 }

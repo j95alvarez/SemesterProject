@@ -5,6 +5,7 @@ public class bullet : MonoBehaviour {
     public float speed;
     public bool sign;
 
+
     // Use this for initialization
     void Start () {
         sign = GameObject.Find("Player").GetComponent<PlayerMovement>().needRev;
@@ -19,11 +20,19 @@ public class bullet : MonoBehaviour {
         
         StartCoroutine(Wait(2.0F));
     }
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.name == "Enemy")
-        {
+
+
+    void OnCollisionEnter2D(Collision2D col) { 
+        if (col.gameObject.name == "Enemy") {
             col.gameObject.GetComponent<EnemyAI>().eHealth -= 20;
+        }
+
+        if (col.gameObject.name == "Projectile") {
+            Destroy(col.gameObject);
+        }
+
+        if (col.gameObject.name == "Boss") {
+            col.gameObject.GetComponent<BossAI>().bossHP -= 20;
         }
         Destroy(this.gameObject);
     }
