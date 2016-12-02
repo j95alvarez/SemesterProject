@@ -27,6 +27,10 @@ public class bullet : MonoBehaviour {
             col.gameObject.GetComponent<EnemyAI>().eHealth -= 20;
         }
 
+        if (col.gameObject.name == "Patrolling Enemy") {
+            col.gameObject.GetComponent<PatrollingScript>().eHealth -= 20;
+        }
+
         if (col.gameObject.name == "Projectile") {
             Destroy(col.gameObject);
         }

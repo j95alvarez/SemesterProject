@@ -16,13 +16,15 @@ public class Spawn : MonoBehaviour {
     private int NegPosXRandom;
     public Object prefeb;
 
+    private bool isBoss;
+
     // Use this for initialization
     void Start () {
-	
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
         //count second.
         if(SpawnCounter < SpawnLimit - 1)
         {
