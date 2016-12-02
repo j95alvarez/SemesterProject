@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
 		canShoot = specialShot = canAttack = true;
 		animatorObj = gameObject.GetComponent<Animator> ();
         gravity = Physics2D.gravity;
+        Physics.IgnoreLayerCollision(10, 9);
 	}
 
 
@@ -93,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         if (Input.GetKeyDown(KeyCode.C)) {
+            gameObject.layer = 10;
             canAttack = false;
             if (facingLeft) {
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(shotForce, 0));
@@ -140,6 +142,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator DodgeCoolDown() {
         yield return new WaitForSeconds(1);
         canAttack = true;
+        gameObject.layer = 0;
     }
 
 	public void Knocked()

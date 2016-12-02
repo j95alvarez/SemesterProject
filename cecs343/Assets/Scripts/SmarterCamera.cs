@@ -6,18 +6,15 @@ public class SmarterCamera : MonoBehaviour {
     public GameObject player;
     public float xThreshold, yThreshold;
     public int maxZoom, minZoom;
-    public float smoothCoeff;
+    public float smoothCoeff, followSpeed;
 
     private Vector3 velocity = Vector3.zero;
 
     // Use this for initialization
     void Start () {
         Camera.main.orthographicSize = 4;
-<<<<<<< HEAD
         //transform.position = (player.transform.position + new Vector3(0,0,-10)); // Move camera on top of player to start.
         followSpeed = 1*GameObject.Find("Player").GetComponent<PlayerMovement>().speed;
-=======
->>>>>>> refs/remotes/origin/master
 	}
 	
 	// Update is called once per frame
