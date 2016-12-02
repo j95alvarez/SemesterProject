@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class EnemyAI : MonoBehaviour {
+    private Vector3 vic;
     public float speed = .5F;
     public int eHealth;
     public GameObject spawn, EneKCount;
@@ -9,6 +10,7 @@ public class EnemyAI : MonoBehaviour {
     public float ChkDistInterval;
 
     public float counter;
+    public float timerDelay;
     // Use this for initialization
     void Start () {
         //playermove = GetComponent<PlayerMovement>();
@@ -18,7 +20,15 @@ public class EnemyAI : MonoBehaviour {
 
     void Update() 
 	{
-        transform.position = Vector3.MoveTowards(transform.position, GameObject.Find("Player").transform.position, speed * Time.deltaTime);
+        timerDelay += Time.deltaTime;
+        if (timerDelay >= 1f)
+        {
+            vic = GameObject.Find("Player").transform.position;
+            timerDelay = 0;
+            //Debug.Log(timerDelay);
+        }
+        transform.position = Vector3.MoveTowards(transform.position, vic, speed * Time.deltaTime);
+
         //Debug.Log(GameObject.Find("Player").transform.position);
         counter += Time.deltaTime;
         if (counter >= ChkDistInterval)

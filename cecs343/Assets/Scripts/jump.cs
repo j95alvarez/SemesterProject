@@ -13,7 +13,7 @@ public class jump : MonoBehaviour {
 
     [SerializeField]
     private LayerMask whatIsGround;
-    private bool isGrounded, _jump;
+    public bool isGrounded, _jump;
 
     [SerializeField]
     private float jumpForce;

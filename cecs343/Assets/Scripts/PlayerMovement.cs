@@ -3,8 +3,14 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-	public GameObject prefab, SpecialBullet1;
+    /***************************************************************/
+    private bool isGround;
+    private bool goTrigger = false;
+    private Rigidbody2D _mybody;
+    public float count;
+    private float timerGroundChk;
+    /***************************************************************/
+    public GameObject prefab, SpecialBullet1;
 	public bool needRev,isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack;
 	public float getScaleX, getScaleY, facing, bulletspeed, speed;
 	public int pHealth, splashDPS , EneDCount;
@@ -31,8 +37,11 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 gravity;
     // Use this for initialization
-    void Start() {
-		EneDCount = 0;
+    void Start(){
+        //isGround = getGround.GetComponent<jump>().isGrounded;
+        _mybody = this.GetComponent<Rigidbody2D>();
+
+        EneDCount = 0;
 		getScaleX = transform.localScale.x;
 		getScaleY = transform.localScale.y;
 		isClimbing = climb = needRev = inAir = false;
@@ -45,13 +54,12 @@ public class PlayerMovement : MonoBehaviour
 
 
 	// Update is called once per frame
-	void Update() 
-
-	{
-		//Moving Direction Detacter
-		//Use NeedRev to determin does the 
-		//left right key need to reverse
-		if (Input.GetAxis("Horizontal") > 0.1) {
+	void Update()
+    {
+        //Moving Direction Detacter
+        //Use NeedRev to determin does the 
+        //left right key need to reverse
+        if (Input.GetAxis("Horizontal") > 0.1) {
 			//Debug.Log("Pos");
 			transform.localScale = new Vector2(getScaleX, getScaleY);
 			needRev = false;
@@ -92,20 +100,33 @@ public class PlayerMovement : MonoBehaviour
 			isWalking = false;
 
 
-        if (Input.GetKeyDown(KeyCode.C)) {
-            canAttack = false;
+        if (Input.GetKeyDown(KeyCode.C) && !isClimbing)
+        {
+            goTrigger = true;
+            /*
             if (facingLeft) {
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(shotForce, 0));
             }
 
             else {
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(-shotForce, 0));
-            }
+            }*/
 
             StartCoroutine(DodgeCoolDown());
         }
+        if (goTrigger)
+        {
+            count += Time.deltaTime;
+            _mybody.isKinematic = true;
+            if (count >= 1)
+            {
+                goTrigger = false;
+                count = 0;
+                _mybody.isKinematic = false;
+            }
+        }
 
-		if (Input.GetKeyDown(KeyCode.Z) && !isClimbing && canShoot) {
+        if (Input.GetKeyDown(KeyCode.Z) && !isClimbing && canShoot) {
 			Attack();
 		}
 
