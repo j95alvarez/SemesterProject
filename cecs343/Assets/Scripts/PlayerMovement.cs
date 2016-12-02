@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 	public GameObject prefab, SpecialBullet1, grenade;
     public bool needRev, isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack;
 	public float getScaleX, getScaleY, facing, bulletspeed, speed;
-	public int pHealth, splashDPS , EneDCount;
+	public int pHealth, splashDPS , EneDCount, maxHealth;
 
 	Animator animatorObj;
 
