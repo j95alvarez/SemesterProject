@@ -61,6 +61,7 @@ public class BossAI : MonoBehaviour {
             }
         }
     }
+
     void RangeAttack() {
 
         if (CalculateMagnitude() > 5)
