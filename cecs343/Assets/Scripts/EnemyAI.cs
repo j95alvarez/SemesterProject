@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour {
     public float ChkDistInterval;
 
     public float counter;
+    private bool faceingLeft;
     // Use this for initialization
     void Start () {
         gameObject.name = "Enemy";
@@ -16,10 +17,14 @@ public class EnemyAI : MonoBehaviour {
         spawn = GameObject.Find("Controller");
         EneKCount = GameObject.Find("Player");
         boss = GameObject.Find("Boss");
+        faceingLeft = true;
+         
     }
 
     void Update() 
 	{
+        NeedsFlip();
+
         transform.position = Vector3.MoveTowards(transform.position, GameObject.Find("Player").transform.position, speed * Time.deltaTime);
         //Debug.Log(GameObject.Find("Player").transform.position);
         counter += Time.deltaTime;
@@ -36,6 +41,26 @@ public class EnemyAI : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+
+    void NeedsFlip()
+    {
+        if (CheckSide() < 0 && !faceingLeft)
+        {
+            faceingLeft = true;
+            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+        }
+
+        else
+        {
+
+            if (faceingLeft && CheckSide() > 0)
+            {
+                faceingLeft = false;
+                transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+            }
+        }
+    }
+
 
     void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.name == "Player") {
@@ -58,5 +83,9 @@ public class EnemyAI : MonoBehaviour {
     IEnumerator resetSpeed() {
         yield return new WaitForSeconds(1);
         speed = .5f;
+    }
+
+    float CheckSide() {
+        return (EneKCount.gameObject.transform.position.x - gameObject.transform.position.x);
     }
 }
