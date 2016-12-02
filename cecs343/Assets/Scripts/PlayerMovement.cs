@@ -5,11 +5,11 @@ public class PlayerMovement : MonoBehaviour
 {
 
 	public GameObject prefab, SpecialBullet1;
-	public bool needRev,isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack;
+	public bool needRev,isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack, isDead;
 	public float getScaleX, getScaleY, facing, bulletspeed, speed;
 	public int pHealth, splashDPS , EneDCount, maxHealth;
 
-	Animator animatorObj;
+	public Animator animatorObj;
 
 	public float jumpCounter;
 
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 		EneDCount = 0;
 		getScaleX = transform.localScale.x;
 		getScaleY = transform.localScale.y;
-		isClimbing = climb = needRev = inAir = false;
+		isClimbing = climb = needRev = inAir = isDead = false;
 		//facing = 1;
 		rb2D = gameObject.GetComponent<Rigidbody2D>();
 		canShoot = specialShot = canAttack = true;
@@ -49,6 +49,9 @@ public class PlayerMovement : MonoBehaviour
 	void Update() 
 
 	{
+		if (pHealth <= 0)
+			isDead = true;
+
 		//Moving Direction Detacter
 		//Use NeedRev to determin does the 
 		//left right key need to reverse
@@ -132,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
 		if (isWalking == true && speed != 0) 
 		{
 			animatorObj.Play ("Player_run");
-		} else if(speed != 0)
+		} else if(speed != 0 && isDead == false)
 			animatorObj.Play ("Player_idle");
 
 
