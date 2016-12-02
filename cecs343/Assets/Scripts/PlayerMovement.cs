@@ -111,13 +111,14 @@ public class PlayerMovement : MonoBehaviour
             else {
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(-shotForce, 0));
             }*/
-            //StartCoroutine(DodgeCoolDown());
+
+            StartCoroutine(DodgeCoolDown());
         }
         if (goTrigger)
         {
             count += Time.deltaTime;
             _mybody.isKinematic = true;
-            if (count >= 1.5)
+            if (count >= 1)
             {
                 goTrigger = false;
                 count = 0;
@@ -173,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
 			if (!KnockRight)
 				rb2D.velocity = new Vector2(KnockForce, KnockForce);
 		}
-		//Debug.Log("Knock Knock Knock");
+		Debug.Log("Knock Knock Knock");
 	}
 
 	void HorizontalMove(float amount) {
@@ -230,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.name == "Enemy")
+		if (collision.gameObject.name == "Enemy 1")
 		{
 			if (collision.transform.position.x > transform.position.x)
 				KnockRight = true;
@@ -250,19 +251,6 @@ public class PlayerMovement : MonoBehaviour
 		if (collision.gameObject.name == "ground") {
 			inAir = false;
 		}
+
 	}
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.name == "Enemy")
-        {
-            GameObject.Find("Enemy").GetComponent<EnemyAI>().DodgeTriggered = true;
-        }
-    }
-    void OnTriggerExit2D(Collider2D stop)
-    {
-        if (stop.gameObject.name == "Enemy")
-        {
-            GameObject.Find("Enemy").GetComponent<EnemyAI>().DodgeTriggered = false;
-        }
-    }
 }
