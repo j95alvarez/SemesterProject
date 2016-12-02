@@ -5,7 +5,8 @@ public class GrenadeAttack : MonoBehaviour {
 
     public GameObject grenade;
     private float offest;
-    public float force;
+    public float forceIncrement;
+    public float startTime;
 
     public bool canGrenade;
     // Use this for initialization
@@ -13,18 +14,26 @@ public class GrenadeAttack : MonoBehaviour {
     {
         canGrenade = true;
         offest = this.gameObject.GetComponent<PlayerMovement>().offest;
+        startTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V) && canGrenade)
+        if (Input.GetKeyDown(KeyCode.X) && canGrenade)
         {
-            throwGrenade();
+            startTime = Time.time;
+        }
+        if(Input.GetKeyUp(KeyCode.X) && canGrenade)
+        {
+            float force = (Time.time - startTime) * forceIncrement;
+            if (force < 200) force = 200;
+            else if (force > 600) force = 600;
+            throwGrenade(force);
         }
     }
 
-    void throwGrenade()
+    void throwGrenade(float force)
     {
         this.gameObject.GetComponent<ShootController>().throwGrenade -= 1;
         Vector3 spawnLocation = transform.position;

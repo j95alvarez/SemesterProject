@@ -3,13 +3,14 @@ using System.Collections;
 
 public class ShootController : MonoBehaviour {
     public int maxShots = 10;
-    public float reloadTime, specialReload, grenadeReload;
-    public int shots, specialShot, throwGrenade;
+    public float reloadTime, grenadeReload; // public float specialReload;
+    public int shots, throwGrenade; //public int specialShot;
+
 	// Use this for initialization
 	void Start () {
         shots = maxShots;
         throwGrenade = 1;
-        specialShot = 1;
+        //specialShot = 1;
 	}
 	
 	// Update is called once per frame
@@ -21,12 +22,12 @@ public class ShootController : MonoBehaviour {
             shots = maxShots;
         }
 
-        if (specialShot <= (maxShots - 10))
-        {
-            this.gameObject.GetComponent<PlayerMovement>().specialShot = false;
-            StartCoroutine(Wait(specialReload, 2));
-            specialShot = 1;
-        }
+        //if (specialShot <= (maxShots - 10))
+        //{
+        //    this.gameObject.GetComponent<PlayerMovement>().specialShot = false;
+        //    StartCoroutine(Wait(specialReload, 2));
+        //    specialShot = 1;
+        //}
         if (throwGrenade == 0)
         {
             this.gameObject.GetComponent<GrenadeAttack>().canGrenade = false;

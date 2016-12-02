@@ -12,7 +12,7 @@ public class Ammo : MonoBehaviour {
         ammo = GetComponent<Text>();
         maxAmmo = player.GetComponent<ShootController>().maxShots;
         ammo.text = "Ammo: " + (player.GetComponent<ShootController>().shots) + " / " + maxAmmo;
-        ammo.text += " Special: 1 / 1";
+        ammo.text += " Grenade: 1 / 1";
         ammo.text += " Kill: " + killCount;
     }
 	
@@ -21,8 +21,8 @@ public class Ammo : MonoBehaviour {
         ammo.text = (!player.GetComponent<PlayerMovement>().canShoot) ? 
             "Ammo: Reloading..." : "Ammo: " + (player.GetComponent<ShootController>().shots) + " / " + maxAmmo + " ";
 
-        ammo.text += (!player.GetComponent<PlayerMovement>().specialShot) ?
-            " Special: Reloading..." : "\nSpecial: 1 / 1\t\t\t\t";
+        ammo.text += (!player.GetComponent<GrenadeAttack>().canGrenade) ?
+            "\nGrenade: Reloading..." : "\nGrenade: 1 / 1\t\t\t\t";
         ammo.text += " Kill: " + player.GetComponent<PlayerMovement>().EneDCount.ToString();
     }
 }
