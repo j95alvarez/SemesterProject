@@ -14,6 +14,6 @@ public class HealthBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		healthBar.GetComponent<RectTransform>().sizeDelta = new Vector2 (player.GetComponent<PlayerMovement>().pHealth, healthBarY);
-	}
+        healthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(player.GetComponent<PlayerMovement>().pHealth, healthBarY);
+    }
 }
