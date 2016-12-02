@@ -78,6 +78,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CleanUpEnemiesOutOfBounds.cs" />
+    <Compile Include="Assets\PatrolFlip.cs" />
+    <Compile Include="Assets\PatrollingScript.cs" />
     <Compile Include="Assets\Scripts\Ammo.cs" />
     <Compile Include="Assets\Scripts\Boss.cs" />
     <Compile Include="Assets\Scripts\BossAI.cs" />

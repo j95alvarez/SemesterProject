@@ -4,16 +4,18 @@ using System.Collections;
 public class EnemyAI : MonoBehaviour {
     public float speed = .5F;
     public int eHealth;
-    public GameObject spawn, EneKCount;
+    public GameObject spawn, EneKCount, boss;
     public int DistanceToDelete;
     public float ChkDistInterval;
 
     public float counter;
     // Use this for initialization
     void Start () {
+        gameObject.name = "Enemy";
         //playermove = GetComponent<PlayerMovement>();
         spawn = GameObject.Find("Controller");
         EneKCount = GameObject.Find("Player");
+        boss = GameObject.Find("Boss");
     }
 
     void Update() 
@@ -23,14 +25,14 @@ public class EnemyAI : MonoBehaviour {
         counter += Time.deltaTime;
         if (counter >= ChkDistInterval)
         {
-            ChkDist();
+            //ChkDist();
             //Debug.Log("Check Point");
             counter = 0;
         }
         if(eHealth <= 0)
         {
             EneKCount.gameObject.GetComponent<PlayerMovement>().EneDCount += 1;
-            spawn.gameObject.GetComponent<Spawn>().SpawnCounter--;
+            boss.gameObject.GetComponent<Spawn>().SpawnCounter--;
             Destroy(gameObject);
         }
     }

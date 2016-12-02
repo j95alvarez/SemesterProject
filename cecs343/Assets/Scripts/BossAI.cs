@@ -21,16 +21,23 @@ public class BossAI : MonoBehaviour {
     [SerializeField]
     private int shotForce;
 
+    private int halfHP;
     // Use this for initialization
     void Start() {
         faceingLeft = true;
         canRush = true;
+        gameObject.GetComponent<Spawn>().enabled = false;
+        halfHP = (bossHP / 2);
     }
 
     // Update is called once per frame
     void Update() {
         if (bossHP <= 0) {
             Time.timeScale = 0;
+        }
+
+        if (bossHP < halfHP) {
+            gameObject.GetComponent<Spawn>().enabled = true;
         }
 
         NeedsFlip();

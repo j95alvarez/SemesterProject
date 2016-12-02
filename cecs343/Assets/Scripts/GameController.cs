@@ -2,20 +2,28 @@
 using System.Collections;
 
 public class GameController : MonoBehaviour {
-    public bool canStart;
+    public bool canStart, isBoss;
 	// Use this for initialization
 	void Start () {
         canStart = false;
         this.gameObject.GetComponent<Spawn>().enabled = false;
-	}
+        isBoss = (gameObject.name == "Boss") ? true : false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if (canStart) {
-            if (Input.GetKeyDown(KeyCode.E)) {
+        if (canStart && !isBoss)
+        {
+            Debug.Log("isBoss: " + isBoss);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
                 Debug.Log("Player Began Game");
                 this.gameObject.GetComponent<Spawn>().enabled = true;
             }
+        }
+
+        else {
+            //gameObject.GetComponent<Spawn>().enabled = 
         }
     }
 
