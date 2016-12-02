@@ -4,8 +4,8 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
 
-	public GameObject prefab, SpecialBullet1;
-	public bool needRev,isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack;
+	public GameObject prefab, SpecialBullet1, grenade;
+    public bool needRev, isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack;
 	public float getScaleX, getScaleY, facing, bulletspeed, speed;
 	public int pHealth, splashDPS , EneDCount, maxHealth;
 
@@ -121,10 +121,10 @@ public class PlayerMovement : MonoBehaviour
 			}
 		}
 
-		if (Input.GetKeyDown(KeyCode.X) && specialShot)
-		{
-			Special1();
-		}
+		//if (Input.GetKeyDown(KeyCode.X) && specialShot)
+		//{
+		//	Special1();
+		//}
 
 		special1TimeLeft -= Time.deltaTime; // Progress special cooldown
 
@@ -190,21 +190,21 @@ public class PlayerMovement : MonoBehaviour
 		speed = 4;
 	}
 
-	void Special1()
-	{
-		this.gameObject.GetComponent<ShootController>().specialShot -= 1;
-		Vector3 spawnLocation = transform.position;
+	//void Special1()
+	//{
+	//	this.gameObject.GetComponent<ShootController>().specialShot -= 1;
+	//	Vector3 spawnLocation = transform.position;
+    //
+	//	if (needRev)
+	//		spawnLocation.x -= offest;
+	//	else
+	//		spawnLocation.x += offest;
+    //
+	//	Instantiate(SpecialBullet1, spawnLocation, Quaternion.identity);
 
-		if (needRev)
-			spawnLocation.x -= offest;
-		else
-			spawnLocation.x += offest;
+    //	special1TimeLeft = special1Cooldown;
 
-		Instantiate(SpecialBullet1, spawnLocation, Quaternion.identity);
-
-		special1TimeLeft = special1Cooldown;
-
-	}
+	//}
 
 	IEnumerator Wait(float waitTime) {
 		yield return new WaitForSeconds(waitTime);

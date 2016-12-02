@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ColliderDetect : MonoBehaviour {
-
+    float timer;
 	// Use this for initialization
 	void Start () {
 	
