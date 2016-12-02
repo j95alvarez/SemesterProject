@@ -4,8 +4,11 @@ using System.Collections;
 public class Explosion : MonoBehaviour {
     public float radius;
     public int damage;
-	// Use this for initialization
-	void Start () {
+
+    Animator animatorObj;
+
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
