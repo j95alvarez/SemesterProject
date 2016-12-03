@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         if (Input.GetKeyDown(KeyCode.C)) {
-            gameObject.layer = 10;
+            gameObject.layer = 11;
             canAttack = false;
             if (facingLeft) {
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(shotForce, 0));
