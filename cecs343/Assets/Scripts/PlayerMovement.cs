@@ -5,8 +5,8 @@ public class PlayerMovement : MonoBehaviour
 {
 
 	public GameObject prefab, SpecialBullet1, grenade;
-    public bool needRev, isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack;
-	public float getScaleX, getScaleY, facing, bulletspeed, speed;
+    public bool needRev, isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack, canDodge;
+	public float getScaleX, getScaleY, facing, bulletspeed, speed, dodgeCooldown, climbForce;
 	public int pHealth, splashDPS , EneDCount, maxHealth;
 
 	Animator animatorObj;
@@ -42,6 +42,9 @@ public class PlayerMovement : MonoBehaviour
 		animatorObj = gameObject.GetComponent<Animator> ();
         gravity = Physics2D.gravity;
         Physics.IgnoreLayerCollision(10, 9);
+        dodgeCooldown = 5;
+        canDodge = true;
+        climbForce = 10;
 	}
 
 
@@ -93,8 +96,9 @@ public class PlayerMovement : MonoBehaviour
 			isWalking = false;
 
 
-        if (Input.GetKeyDown(KeyCode.C)) {
-            gameObject.layer = 10;
+        if (Input.GetKeyDown(KeyCode.C) && canDodge) {
+            gameObject.layer = 11;
+            canDodge = false;
             canAttack = false;
             if (facingLeft) {
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(shotForce, 0));
@@ -113,11 +117,11 @@ public class PlayerMovement : MonoBehaviour
 
 		if (climb) {
 			if (Input.GetKey(KeyCode.UpArrow)) {
-				VerticalMove(speed * Time.deltaTime);
+				gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, climbForce));
 			}
 
 			if (Input.GetKey(KeyCode.DownArrow)) {
-				VerticalMove(-(speed * Time.deltaTime));
+				gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -1*climbForce));
 			}
 		}
 
@@ -142,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator DodgeCoolDown() {
         yield return new WaitForSeconds(1);
         canAttack = true;
+        canDodge = true;
         gameObject.layer = 0;
     }
 

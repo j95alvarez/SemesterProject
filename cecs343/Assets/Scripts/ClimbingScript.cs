@@ -10,10 +10,10 @@ public class ClimbingScript : MonoBehaviour {
 		if (player.GetComponent<PlayerMovement> ().climb) {
 			if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) {
 				player.GetComponent<PlayerMovement>().isClimbing = true;
+                player.layer = 12;
 			}
 			if (player.GetComponent<PlayerMovement>().isClimbing) {
 				player.GetComponent<Rigidbody2D>().gravityScale = 0f;
-				player.GetComponent<BoxCollider2D>().isTrigger = true;
 			}
 		}
 	}
@@ -29,8 +29,8 @@ public class ClimbingScript : MonoBehaviour {
     void OnTriggerExit2D(Collider2D collide) {
         if (collide.gameObject.name == "Player") {
             collide.GetComponent<PlayerMovement>().isClimbing = false;
-            collide.GetComponent<BoxCollider2D>().isTrigger = false;
             player.GetComponent<PlayerMovement>().climb = false;
+            player.layer = 0;
             StartCoroutine(Wait(.001f));
         }
     }
