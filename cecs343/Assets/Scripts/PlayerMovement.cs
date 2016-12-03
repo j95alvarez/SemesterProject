@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         Physics.IgnoreLayerCollision(10, 9);
         dodgeCooldown = 5;
         canDodge = true;
-        climbForce = 10;
+        climbForce = 80;
 	}
 
 
