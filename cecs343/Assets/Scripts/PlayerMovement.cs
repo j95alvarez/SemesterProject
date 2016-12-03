@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public GameObject prefab, SpecialBullet1, grenade;
     public bool needRev, isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack, canDodge;
-	public float getScaleX, getScaleY, facing, bulletspeed, speed, dodgeCooldown;
+	public float getScaleX, getScaleY, facing, bulletspeed, speed, dodgeCooldown, climbForce;
 	public int pHealth, splashDPS , EneDCount, maxHealth;
 
 	Animator animatorObj;
@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         Physics.IgnoreLayerCollision(10, 9);
         dodgeCooldown = 5;
         canDodge = true;
+        climbForce = 10;
 	}
 
 
@@ -116,11 +117,11 @@ public class PlayerMovement : MonoBehaviour
 
 		if (climb) {
 			if (Input.GetKey(KeyCode.UpArrow)) {
-				VerticalMove(speed * Time.deltaTime);
+				gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, climbForce));
 			}
 
 			if (Input.GetKey(KeyCode.DownArrow)) {
-				VerticalMove(-(speed * Time.deltaTime));
+				gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -1*climbForce));
 			}
 		}
 
