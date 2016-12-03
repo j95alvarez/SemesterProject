@@ -42,10 +42,6 @@ public class Explosion : MonoBehaviour {
         {
             col.gameObject.GetComponent<BossAI>().bossHP -= damage;
         }
-        if (col.gameObject.name == "Player")
-        {
-            col.gameObject.GetComponent<PlayerMovement>().pHealth -= damage;
-        }
         physic.AddForce((target-epicenter) * 1000);
     }
 
