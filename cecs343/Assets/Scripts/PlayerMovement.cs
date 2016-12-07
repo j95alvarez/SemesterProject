@@ -5,11 +5,11 @@ public class PlayerMovement : MonoBehaviour
 {
 
 	public GameObject prefab, SpecialBullet1, grenade;
-    public bool needRev, isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack, canDodge;
+    public bool needRev, isClimbing, climb, inAir, canShoot, specialShot, isWalking, facingLeft, canAttack, canDodge, isDead;
 	public float getScaleX, getScaleY, facing, bulletspeed, speed, dodgeCooldown, climbForce;
 	public int pHealth, splashDPS , EneDCount, maxHealth;
 
-	Animator animatorObj;
+	public Animator animatorObj;
 
 	public float jumpCounter;
 
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 		EneDCount = 0;
 		getScaleX = transform.localScale.x;
 		getScaleY = transform.localScale.y;
-		isClimbing = climb = needRev = inAir = false;
+		isClimbing = climb = needRev = inAir = isDead = false;
 		//facing = 1;
 		rb2D = gameObject.GetComponent<Rigidbody2D>();
 		canShoot = specialShot = canAttack = true;
@@ -49,25 +49,24 @@ public class PlayerMovement : MonoBehaviour
 
 
 	// Update is called once per frame
-	void Update() 
-
+	void Update()
 	{
+		if (pHealth <= 0)
+			isDead = true;
 		//Moving Direction Detacter
 		//Use NeedRev to determin does the 
 		//left right key need to reverse
-		if (Input.GetAxis("Horizontal") > 0.1) {
+		if (Input.GetAxis ("Horizontal") > 0.1) {
 			//Debug.Log("Pos");
-			transform.localScale = new Vector2(getScaleX, getScaleY);
+			transform.localScale = new Vector2 (getScaleX, getScaleY);
 			needRev = false;
-		}
-		else if (Input.GetAxis("Horizontal") < -0.1) {
+		} else if (Input.GetAxis ("Horizontal") < -0.1) {
 			//Debug.Log("Neg");
-			transform.localScale = new Vector2(-getScaleX, getScaleY);
+			transform.localScale = new Vector2 (-getScaleX, getScaleY);
 			needRev = true;
 		}
 
-		if (Input.GetKey (KeyCode.LeftArrow)) 
-		{
+		if (Input.GetKey (KeyCode.LeftArrow)) {
 			//while player change face direction
 			//facing = -1
 			isWalking = facingLeft = true;
@@ -78,12 +77,10 @@ public class PlayerMovement : MonoBehaviour
 				//Debug.Log("Left");
 				HorizontalMove (-(speed * Time.deltaTime));
 			}
-		}
-		else if (Input.GetKey (KeyCode.RightArrow)) 
-		{
+		} else if (Input.GetKey (KeyCode.RightArrow)) {
 			//facing = 1;
 			isWalking = true;
-            facingLeft = false;
+			facingLeft = false;
 			if (needRev) {
 				//Debug.Log("reverse2");
 				HorizontalMove (-(speed * Time.deltaTime));
@@ -91,39 +88,39 @@ public class PlayerMovement : MonoBehaviour
 				//Debug.Log("Right");
 				HorizontalMove (speed * Time.deltaTime);
 			}
-		} 
-		else 
+		} else
 			isWalking = false;
 
 
-        if (Input.GetKeyDown(KeyCode.C) && canDodge) {
-            gameObject.layer = 11;
-            canDodge = false;
-            canAttack = false;
-            if (facingLeft) {
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(shotForce, 0));
-            }
+		if (Input.GetKeyDown (KeyCode.C) && canDodge) {
+			gameObject.layer = 11;
+			canDodge = false;
+			canAttack = false;
+			if (facingLeft) {
+				GetComponent<Rigidbody2D> ().AddForce (new Vector2 (shotForce, 0));
+			} else {
+				GetComponent<Rigidbody2D> ().AddForce (new Vector2 (-shotForce, 0));
+			}
 
-            else {
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(-shotForce, 0));
-            }
+			StartCoroutine (DodgeCoolDown ());
+		}
 
-            StartCoroutine(DodgeCoolDown());
-        }
-
-		if (Input.GetKeyDown(KeyCode.Z) && !isClimbing && canShoot) {
-			Attack();
+		if (Input.GetKeyDown (KeyCode.Z) && !isClimbing && canShoot) {
+			Attack ();
 		}
 
 		if (climb) {
-			if (Input.GetKey(KeyCode.UpArrow)) {
-				gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, climbForce));
+			if (Input.GetKey (KeyCode.UpArrow)) {
+				gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0, climbForce));
 			}
 
-			if (Input.GetKey(KeyCode.DownArrow)) {
-				gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -1*climbForce));
+			if (Input.GetKey (KeyCode.DownArrow)) {
+				gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0, -1 * climbForce));
 			}
 		}
+
+		if (climb == false)
+			isClimbing = false;
 
 		//if (Input.GetKeyDown(KeyCode.X) && specialShot)
 		//{
@@ -133,11 +130,15 @@ public class PlayerMovement : MonoBehaviour
 		special1TimeLeft -= Time.deltaTime; // Progress special cooldown
 
 		//Animations
-		if (isWalking == true && speed != 0) 
-		{
+		if (isWalking == true && speed != 0 && isDead == false && isClimbing == false) {
 			animatorObj.Play ("Player_run");
-		} else if(speed != 0)
+		} else if (speed != 0 && isDead == false && isClimbing == false) {
 			animatorObj.Play ("Player_idle");
+		}else if(isClimbing == true){
+			animatorObj.Play ("Player_Climb");
+		} else if (isDead == true) {
+			animatorObj.Play ("Player_Dead");
+		}
 
 
 	}

@@ -23,8 +23,8 @@ public class Pause : MonoBehaviour {
         }
 
         if (player.gameObject.GetComponent<PlayerMovement>().pHealth <= 0) {
-            GameOverMenu(true);
-            Time.timeScale = 0;
+			player.GetComponent<PlayerMovement> ().animatorObj.Play ("Player_Dead");
+			StartCoroutine (delay ());
         }
 
         if (boss.gameObject.GetComponent<BossAI>().bossHP <= 0) {
@@ -44,6 +44,13 @@ public class Pause : MonoBehaviour {
     void GameCompleted(bool active) {
         gameCompleted.gameObject.SetActive(active);
     }
+
+	IEnumerator delay()
+	{
+		yield return new WaitForSeconds (.5f);
+		GameOverMenu(true);
+		Time.timeScale = 0;
+	}
 
     public void Continue(bool clicked) {
         PauseMenu(!clicked);
