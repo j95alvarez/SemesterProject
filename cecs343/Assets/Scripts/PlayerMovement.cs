@@ -117,11 +117,11 @@ public class PlayerMovement : MonoBehaviour
 
 		if (climb) {
 			if (Input.GetKey(KeyCode.UpArrow)) {
-				gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, climbForce));
+                VerticalMove(5 * Time.deltaTime);
 			}
 
 			if (Input.GetKey(KeyCode.DownArrow)) {
-				gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -1*climbForce));
+                VerticalMove(-5 * Time.deltaTime);
 			}
 		}
 
