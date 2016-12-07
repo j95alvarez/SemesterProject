@@ -9,15 +9,15 @@ public class bullet : MonoBehaviour {
     // Use this for initialization
     void Start () {
         sign = GameObject.Find("Player").GetComponent<PlayerMovement>().needRev;
+        if (sign) {
+            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+        } 
     }
 
     // Update is called once per frame
     void Update () {
-        if (sign)
-            transform.Translate(-speed * Time.deltaTime, 0, 0);
-        else
-            transform.Translate(speed * Time.deltaTime, 0, 0);
-        
+        transform.Translate(speed * Time.deltaTime, 0, 0);
+
         StartCoroutine(Wait(2.0F));
     }
 
