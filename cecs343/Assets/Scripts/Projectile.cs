@@ -18,9 +18,6 @@ public class Projectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (projectileHP <= 0) {
-            Destroy(gameObject);
-        }
         if (shot) {
             shot = false;
             StartCoroutine(Delay());

@@ -24,7 +24,7 @@ public class BossAI : MonoBehaviour {
     private int halfHP;
     // Use this for initialization
     void Start() {
-        faceingLeft = true;
+        faceingLeft = false;
         canRush = true;
         gameObject.GetComponent<Spawn>().enabled = false;
         halfHP = (bossHP / 2);
