@@ -3,33 +3,42 @@ using System.Collections;
 
 public class ClimbingScript : MonoBehaviour {
 	GameObject player;
+    PlayerMovement playerMovement;
+    Rigidbody2D rigidBody;
+
 	void Start() {
 		player = GameObject.Find("Player");
+        playerMovement = player.GetComponent<PlayerMovement>();
+        rigidBody = player.GetComponent<Rigidbody2D>();
 	}
 	void Update() {
 		if (player.GetComponent<PlayerMovement> ().climb) {
 			if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) {
-				player.GetComponent<PlayerMovement>().isClimbing = true;
+				playerMovement.isClimbing = true;
                 player.layer = 12;
 			}
-			if (player.GetComponent<PlayerMovement>().isClimbing) {
-				player.GetComponent<Rigidbody2D>().gravityScale = 0f;
+			if (playerMovement.isClimbing) {
+				rigidBody.gravityScale = 0f;
+                //player.GetComponent<BoxCollider2D>().isTrigger = true;
 			}
 		}
 	}
 
     void OnTriggerEnter2D(Collider2D collide) {
-        if (collide.gameObject.name == "Player") 
+        if (collide.gameObject.name == "ClimbTrigger") 
 		{
-			collide.GetComponent<PlayerMovement>().climb = true;
+            Debug.Log("Enter Ladder");
+			playerMovement.climb = true;
            // Debug.Log("Climbing = " + player.GetComponent<PlayerMovement>().isClimbing);
         }
     }
 
     void OnTriggerExit2D(Collider2D collide) {
-        if (collide.gameObject.name == "Player") {
-            collide.GetComponent<PlayerMovement>().isClimbing = false;
-            player.GetComponent<PlayerMovement>().climb = false;
+        if (collide.gameObject.name == "ClimbTrigger") {
+            Debug.Log("Exit Ladder");
+            playerMovement.isClimbing = false;
+            //collide.GetComponent<BoxCollider2D>().isTrigger = false;
+            playerMovement.climb = false;
             player.layer = 0;
             StartCoroutine(Wait(.001f));
         }
