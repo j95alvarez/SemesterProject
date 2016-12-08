@@ -32,7 +32,7 @@ public class bullet : MonoBehaviour {
         }
 
         if (col.gameObject.name == "Projectile") {
-            Destroy(col.gameObject);
+            col.gameObject.GetComponent<Projectile>().counter += 1;
         }
 
         if (col.gameObject.name == "Boss") {

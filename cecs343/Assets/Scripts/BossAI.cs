@@ -8,9 +8,8 @@ public class BossAI : MonoBehaviour {
     [SerializeField]
     private float speed, offest;
 
-
-    [SerializeField]
-    private bool faceingLeft;
+    
+    public bool faceingLeft;
 
 
     [SerializeField]
