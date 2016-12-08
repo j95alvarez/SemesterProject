@@ -133,11 +133,14 @@ public class PlayerMovement : MonoBehaviour
 		special1TimeLeft -= Time.deltaTime; // Progress special cooldown
 
 		//Animations
-		if (isWalking == true && speed != 0) 
+		if (isWalking == true && speed != 0 && isClimbing == false) 
 		{
 			animatorObj.Play ("Player_run");
-		} else if(speed != 0)
+		} else if(isClimbing == true){
+			animatorObj.Play ("Player_Climb");
+		}else if(speed != 0 && isClimbing == false){
 			animatorObj.Play ("Player_idle");
+		}
 
 
 	}
