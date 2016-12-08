@@ -7,17 +7,28 @@ public class Projectile : MonoBehaviour {
 
     public bool shot;
 
-    public int projectileHP;
-    
+    public int counter;
+
+    private bool sign;
 
     // Use this for initialization
     void Start () {
+        counter = 0;
         gameObject.name = "Projectile";
         shot = true;
+        sign = GameObject.Find("Boss").GetComponent<BossAI>().faceingLeft;
+
+        if (!sign) {
+            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (counter > 2) {
+            Destroy(gameObject);
+        }
         if (shot) {
             shot = false;
             StartCoroutine(Delay());
@@ -36,11 +47,11 @@ public class Projectile : MonoBehaviour {
         if (col.gameObject.name == "Player") {
             if (col.gameObject.GetComponent<PlayerMovement>().canAttack) {
                 col.gameObject.GetComponent<PlayerMovement>().pHealth -= 30;
-                
+                Destroy(gameObject);
             }  
         }
-
-        Destroy(gameObject);
+    
+       
     }
 
 
