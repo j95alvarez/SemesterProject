@@ -23,7 +23,7 @@ public class Explosion : MonoBehaviour {
         Vector2 epicenter = new Vector2(gameObject.transform.position.x,gameObject.transform.position.y);
         Vector2 target = new Vector2(col.gameObject.transform.position.x, col.gameObject.transform.position.y);
 
-        if (col.gameObject.name == "Enemy")
+        if (col.gameObject.name == "Enemy" )
         {
             col.gameObject.GetComponent<EnemyAI>().eHealth -= damage;
         }
@@ -41,6 +41,7 @@ public class Explosion : MonoBehaviour {
         if (col.gameObject.name == "Boss")
         {
             col.gameObject.GetComponent<BossAI>().bossHP -= damage;
+            physic = null;
         }
         physic.AddForce((target-epicenter) * 1000);
     }
