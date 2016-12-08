@@ -19,6 +19,7 @@ public class ClimbingScript : MonoBehaviour {
 			}
 			if (playerMovement.isClimbing) {
 				rigidBody.gravityScale = 0f;
+                rigidBody.velocity = Vector2.zero;
                 //player.GetComponent<BoxCollider2D>().isTrigger = true;
 			}
 		}
